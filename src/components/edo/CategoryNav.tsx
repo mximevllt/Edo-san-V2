@@ -36,33 +36,36 @@ export function CategoryNav({ onOpenCart }: { onOpenCart: () => void }) {
   };
 
   return (
-    <div className="sticky top-0 z-40 border-b border-cream/10 bg-ink/85 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-[1500px] items-center gap-4 px-4 py-3 lg:px-8">
+    <div className="sticky top-0 z-40 w-full max-w-full border-b border-cream/10 bg-ink/85 backdrop-blur-xl">
+      <div className="mx-auto flex w-full max-w-[1500px] items-center gap-3 px-4 py-3 lg:px-8">
         <a href="#top" className="flex shrink-0 items-center gap-2">
           <img src={logo.url} alt="Edo-San Sushi" className="h-9 w-9 object-contain" />
           <span className="hidden font-display text-lg text-cream sm:inline">Edo-San</span>
         </a>
-        <div
-          ref={navRef}
-          className="no-scrollbar flex flex-1 items-center gap-2 overflow-x-auto"
-        >
-          {CATEGORIES.map((c) => {
-            const isActive = active === c.id;
-            return (
-              <button
-                key={c.id}
-                data-cat={c.id}
-                onClick={() => scrollTo(c.id)}
-                className={`relative shrink-0 rounded-full px-4 py-2 text-sm font-medium transition ${
-                  isActive
-                    ? "bg-crimson text-crimson-foreground"
-                    : "text-muted-foreground hover:bg-white/5 hover:text-cream"
-                }`}
-              >
-                {c.label}
-              </button>
-            );
-          })}
+        <div className="relative min-w-0 flex-1">
+          <div
+            ref={navRef}
+            className="no-scrollbar fade-right-mask flex items-center gap-2 overflow-x-auto whitespace-nowrap scroll-smooth"
+          >
+            {CATEGORIES.map((c) => {
+              const isActive = active === c.id;
+              return (
+                <button
+                  key={c.id}
+                  data-cat={c.id}
+                  onClick={() => scrollTo(c.id)}
+                  className={`relative shrink-0 rounded-full px-4 py-2 text-sm font-medium transition ${
+                    isActive
+                      ? "bg-crimson text-crimson-foreground"
+                      : "text-muted-foreground hover:bg-white/5 hover:text-cream"
+                  }`}
+                >
+                  {c.label}
+                </button>
+              );
+            })}
+          </div>
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-ink to-transparent" />
         </div>
         <button
           type="button"
