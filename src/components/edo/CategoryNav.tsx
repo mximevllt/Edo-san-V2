@@ -27,8 +27,11 @@ export function CategoryNav({ onOpenCart }: { onOpenCart: () => void }) {
   }, []);
 
   useEffect(() => {
-    const btn = navRef.current?.querySelector<HTMLElement>(`[data-cat="${active}"]`);
-    btn?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    const container = navRef.current;
+    const btn = container?.querySelector<HTMLElement>(`[data-cat="${active}"]`);
+    if (!container || !btn) return;
+    const target = btn.offsetLeft - container.clientWidth / 2 + btn.clientWidth / 2;
+    container.scrollTo({ left: target, behavior: "smooth" });
   }, [active]);
 
   const scrollTo = (id: string) => {
