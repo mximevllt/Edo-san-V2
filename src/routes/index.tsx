@@ -32,7 +32,7 @@ function Index() {
   return (
     <CartProvider>
       <div className="min-h-screen bg-ink overflow-x-hidden">
-        <div className="grid lg:grid-cols-[minmax(0,1fr)_400px] xl:grid-cols-[minmax(0,1fr)_440px]">
+        <div className="grid items-start lg:grid-cols-[minmax(0,1fr)_400px] xl:grid-cols-[minmax(0,1fr)_440px]">
           <main className="min-w-0 w-full max-w-full overflow-x-hidden">
             <Hero />
             <CategoryNav onOpenCart={() => setCartOpen(true)} />
