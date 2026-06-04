@@ -147,7 +147,7 @@ function CartBody() {
 
 export function DesktopCart() {
   return (
-    <aside className="sticky top-6 hidden h-[calc(100vh-48px)] overflow-y-auto border-l border-cream/10 bg-ink-elevated lg:block">
+    <aside className="sticky top-6 hidden h-[calc(100vh-120px)] overflow-y-auto border-l border-cream/10 bg-ink-elevated lg:block">
       <CartBody />
     </aside>
   );
