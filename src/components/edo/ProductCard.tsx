@@ -24,15 +24,15 @@ export function ProductCard({ product }: { product: Product }) {
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent" />
       </div>
 
-      <div className="flex flex-1 flex-col gap-3 p-5">
-        <div className="flex-1">
-          <h3 className="text-lg leading-tight text-cream">{product.name}</h3>
-          <p className="mt-1 text-sm text-muted-foreground line-clamp-2">
+      <div className="flex flex-1 flex-col gap-3 p-3 sm:p-5">
+        <div className="flex-1 min-w-0">
+          <h3 className="text-base leading-tight text-cream sm:text-lg">{product.name}</h3>
+          <p className="mt-1 text-xs text-muted-foreground line-clamp-2 sm:text-sm">
             {product.description}
           </p>
         </div>
-        <div className="flex items-end justify-between gap-3">
-          <span className="font-display text-2xl text-cream">
+        <div className="flex flex-wrap items-end justify-between gap-2 sm:gap-3">
+          <span className="font-display text-xl text-cream sm:text-2xl">
             {formatPrice(product.price)}
           </span>
           <AddButton product={product} />
