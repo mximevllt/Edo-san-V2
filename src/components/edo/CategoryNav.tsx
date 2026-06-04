@@ -39,9 +39,8 @@ export function CategoryNav({ onOpenCart }: { onOpenCart: () => void }) {
   };
 
   return (
-    <div className="h-[68px] w-full max-w-full">
-      <div className="sticky top-0 z-40 w-full max-w-full border-b border-cream/10 bg-ink">
-        <div className="mx-auto flex h-[68px] w-full max-w-[1500px] items-center gap-3 px-4 lg:px-8">
+    <div className="sticky top-0 z-40 h-[68px] w-full max-w-full border-b border-cream/10 bg-ink">
+      <div className="mx-auto flex h-full w-full max-w-[1500px] items-center gap-3 px-4 lg:px-8">
           <a href="#top" className="flex shrink-0 items-center gap-2">
             <img src={logo.url} alt="Edo-San Sushi" className="h-9 w-9 object-contain" />
             <span className="hidden font-display text-lg text-cream sm:inline">Edo-San</span>
@@ -84,7 +83,6 @@ export function CategoryNav({ onOpenCart }: { onOpenCart: () => void }) {
               </span>
             )}
           </button>
-        </div>
       </div>
     </div>
   );
