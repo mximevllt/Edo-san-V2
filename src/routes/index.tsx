@@ -52,7 +52,7 @@ function Index() {
                       {cat.items.length} produit{cat.items.length > 1 ? "s" : ""}
                     </span>
                   </div>
-                  <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+                  <div className="grid grid-cols-2 gap-3 sm:gap-5 xl:grid-cols-3">
                     {cat.items.map((p) => (
                       <ProductCard key={p.id} product={p} />
                     ))}
