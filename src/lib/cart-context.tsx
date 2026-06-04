@@ -1,0 +1,73 @@
+import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
+import type { Product } from "@/data/menu";
+
+export type CartItem = { product: Product; quantity: number };
+
+type CartContextValue = {
+  items: CartItem[];
+  add: (product: Product) => void;
+  remove: (productId: string) => void;
+  setQty: (productId: string, qty: number) => void;
+  clear: () => void;
+  quantityOf: (productId: string) => number;
+  total: number;
+  count: number;
+};
+
+const CartContext = createContext<CartContextValue | null>(null);
+
+export function CartProvider({ children }: { children: ReactNode }) {
+  const [items, setItems] = useState<CartItem[]>([]);
+
+  const add = useCallback((product: Product) => {
+    setItems((prev) => {
+      const existing = prev.find((i) => i.product.id === product.id);
+      if (existing) {
+        return prev.map((i) =>
+          i.product.id === product.id ? { ...i, quantity: i.quantity + 1 } : i
+        );
+      }
+      return [...prev, { product, quantity: 1 }];
+    });
+  }, []);
+
+  const setQty = useCallback((productId: string, qty: number) => {
+    setItems((prev) =>
+      qty <= 0
+        ? prev.filter((i) => i.product.id !== productId)
+        : prev.map((i) => (i.product.id === productId ? { ...i, quantity: qty } : i))
+    );
+  }, []);
+
+  const remove = useCallback((productId: string) => {
+    setItems((prev) => prev.filter((i) => i.product.id !== productId));
+  }, []);
+
+  const clear = useCallback(() => setItems([]), []);
+
+  const value = useMemo<CartContextValue>(() => {
+    const total = items.reduce((acc, i) => acc + i.product.price * i.quantity, 0);
+    const count = items.reduce((acc, i) => acc + i.quantity, 0);
+    return {
+      items,
+      add,
+      remove,
+      setQty,
+      clear,
+      quantityOf: (id) => items.find((i) => i.product.id === id)?.quantity ?? 0,
+      total,
+      count,
+    };
+  }, [items, add, remove, setQty, clear]);
+
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
+}
+
+export function useCart() {
+  const ctx = useContext(CartContext);
+  if (!ctx) throw new Error("useCart must be used inside CartProvider");
+  return ctx;
+}
+
+export const formatPrice = (n: number) =>
+  new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }).format(n);
