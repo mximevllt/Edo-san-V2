@@ -73,7 +73,7 @@ function Index() {
 
           <DesktopCart />
         </div>
-        <MobileCart open={cartOpen} onClose={() => setCartOpen(false)} />
+        <MobileCart open={cartOpen} onOpen={() => setCartOpen(true)} onClose={() => setCartOpen(false)} />
       </div>
     </CartProvider>
   );

@@ -153,7 +153,7 @@ export function DesktopCart() {
   );
 }
 
-export function MobileCart({ open, onClose }: { open: boolean; onClose: () => void }) {
+export function MobileCart({ open, onOpen, onClose }: { open: boolean; onOpen: () => void; onClose: () => void }) {
   const { count, total } = useCart();
   return (
     <>
@@ -193,7 +193,7 @@ export function MobileCart({ open, onClose }: { open: boolean; onClose: () => vo
             initial={{ y: 80, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 80, opacity: 0 }}
-            onClick={() => (window.innerWidth < 1024 ? onClose() : null) || onClose()}
+            onClick={onOpen}
             className="fixed inset-x-4 bottom-4 z-40 flex items-center justify-between rounded-full bg-crimson px-5 py-4 text-crimson-foreground crimson-glow animate-crimson-pulse lg:hidden"
           >
             <span className="flex items-center gap-2 font-subtitle text-sm uppercase tracking-wider">
