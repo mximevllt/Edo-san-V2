@@ -104,6 +104,10 @@ import midiOsaka from "@/assets/midi/osaka.jpg.asset.json";
 import midiMatsue from "@/assets/midi/matsue.jpg.asset.json";
 import midiNara from "@/assets/midi/nara.jpg.asset.json";
 
+import yakSaumon from "@/assets/yakitori/saumon.jpg.asset.json";
+import yakTsukune from "@/assets/yakitori/tsukune.jpg.asset.json";
+import yakPouletCaramel from "@/assets/yakitori/poulet-caramel.jpg.asset.json";
+
 export type Product = {
   id: string;
   name: string;
