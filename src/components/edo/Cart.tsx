@@ -135,6 +135,7 @@ function CartBody({ onCheckout }: { onCheckout: () => void }) {
         <motion.button
           whileTap={{ scale: 0.98 }}
           disabled={items.length === 0}
+          onClick={onCheckout}
           className="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl bg-crimson py-4 font-subtitle text-base uppercase tracking-wider text-crimson-foreground transition disabled:cursor-not-allowed disabled:opacity-40 enabled:animate-crimson-pulse enabled:crimson-glow"
         >
           Valider ma commande
