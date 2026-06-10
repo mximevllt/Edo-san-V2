@@ -35,6 +35,15 @@ import calSalmonPillow from "@/assets/california/California-Salmon-Pillow-1.jpg.
 import calSaumon from "@/assets/california/California-Saumon-Avocat-Concombre.jpg.asset.json";
 import calSaumonCheese from "@/assets/california/California-Saumon-Cheese-Avocat-Concombre-1.jpg.asset.json";
 import calThon from "@/assets/california/California-Thon-Avocat-Concombre-1.jpg.asset.json";
+import calCrevetteSpicy from "@/assets/california/crevette-spicy.jpeg.asset.json";
+import calThonCuit from "@/assets/california/thon-cuit-avocat.jpg.asset.json";
+
+import chirashiImperiale from "@/assets/chirashi/imperiale.jpg.asset.json";
+import chirashiMarine from "@/assets/chirashi/marine.jpg.asset.json";
+import chirashiMixte from "@/assets/chirashi/mixte.jpg.asset.json";
+import chirashiSaumon from "@/assets/chirashi/saumon.jpg.asset.json";
+import chirashiThon from "@/assets/chirashi/thon.jpg.asset.json";
+import chirashiTartare from "@/assets/chirashi/tartare.jpg.asset.json";
 
 export type Product = {
   id: string;
@@ -96,10 +105,10 @@ export const CATEGORIES: Category[] = [
       { id: "c-2", name: "California Crevette Panée Avocat", description: "Crevette croustillante, avocat", price: 8.9, image: calCrevettePanee.url },
       { id: "c-3", name: "California Saumon Cheese Avocat Concombre", description: "Saumon, cheese, avocat", price: 8.5, image: calSaumonCheese.url },
       { id: "c-4", name: "California Poulet Concombre Spicy", description: "Poulet épicé, concombre", price: 8.5, image: calPouletSpicy.url },
-      { id: "c-5", name: "California Signature", description: "Création maison du chef", price: 9.5, image: california },
+      { id: "c-5", name: "California Signature", description: "Création maison du chef", price: 9.5, image: calCrevetteSpicy.url },
       { id: "c-6", name: "California Thon Avocat Concombre", description: "Thon rouge, avocat", price: 8.9, image: calThon.url },
       { id: "c-7", name: "California Poulet Avocat Mayo", description: "Poulet, avocat, mayo japonaise", price: 8.5, image: calPouletMayo.url },
-      { id: "c-8", name: "California Thon Cuit Avocat", description: "Thon cuit, avocat onctueux", price: 8.5, image: california },
+      { id: "c-8", name: "California Thon Cuit Avocat", description: "Thon cuit, avocat onctueux", price: 8.5, image: calThonCuit.url },
       { id: "c-9", name: "California Peruvian", description: "Inspiration péruvienne, ceviche", price: 9.9, image: calPeruvian.url },
       { id: "c-10", name: "California Salmon Pillow", description: "Saumon en coussin, fondant", price: 9.5, image: calSalmonPillow.url },
       { id: "c-11", name: "California Crevette Avocat Menthe", description: "Crevette, menthe fraîche", price: 8.9, image: calCrevetteMenthe.url },
@@ -168,12 +177,12 @@ export const CATEGORIES: Category[] = [
     id: "chirashi",
     label: "Chirashi",
     items: [
-      { id: "ch-1", name: "Chirashi Thon Avocat", description: "Bol de riz, thon, avocat", price: 15.9, image: chirashi },
-      { id: "ch-2", name: "Chirashi Mariné", description: "Poissons marinés, sauce maison", price: 16.5, image: chirashi },
-      { id: "ch-3", name: "Tartare du Moment", description: "Tartare de poisson du jour", price: 15.5, image: chirashi },
-      { id: "ch-4", name: "Chirashi Impériale", description: "La grande sélection chirashi", price: 19.9, image: chirashi },
-      { id: "ch-5", name: "Chirashi Mixte Avocat", description: "Mix de poissons, avocat", price: 17.5, image: chirashi },
-      { id: "ch-6", name: "Chirashi Saumon Avocat", description: "Saumon, avocat, riz vinaigré", price: 14.9, image: chirashi },
+      { id: "ch-1", name: "Chirashi Thon Avocat", description: "Bol de riz, thon, avocat", price: 15.9, image: chirashiThon.url },
+      { id: "ch-2", name: "Chirashi Mariné", description: "Poissons marinés, sauce maison", price: 16.5, image: chirashiMarine.url },
+      { id: "ch-3", name: "Tartare du Moment", description: "Tartare de poisson du jour", price: 15.5, image: chirashiTartare.url },
+      { id: "ch-4", name: "Chirashi Impériale", description: "La grande sélection chirashi", price: 19.9, image: chirashiImperiale.url },
+      { id: "ch-5", name: "Chirashi Mixte Avocat", description: "Mix de poissons, avocat", price: 17.5, image: chirashiMixte.url },
+      { id: "ch-6", name: "Chirashi Saumon Avocat", description: "Saumon, avocat, riz vinaigré", price: 14.9, image: chirashiSaumon.url },
     ],
   },
   {
