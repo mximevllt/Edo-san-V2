@@ -108,6 +108,16 @@ import yakSaumon from "@/assets/yakitori/saumon.jpg.asset.json";
 import yakTsukune from "@/assets/yakitori/tsukune.jpg.asset.json";
 import yakPouletCaramel from "@/assets/yakitori/poulet-caramel.jpg.asset.json";
 
+import boCoca from "@/assets/boissons/coca.png.asset.json";
+import boAsahi from "@/assets/boissons/asahi.png.asset.json";
+import boOasis from "@/assets/boissons/oasis.jpg.asset.json";
+import boKirin from "@/assets/boissons/kirin.jpg.asset.json";
+import boCocaZero from "@/assets/boissons/coca-zero.jpg.asset.json";
+import boRamune from "@/assets/boissons/ramune.png.asset.json";
+import boFuze from "@/assets/boissons/fuze.jpg.asset.json";
+import boPellegrino from "@/assets/boissons/pellegrino.jpg.asset.json";
+import boOrangina from "@/assets/boissons/orangina.png.asset.json";
+
 export type Product = {
   id: string;
   name: string;
@@ -307,15 +317,15 @@ export const CATEGORIES: Category[] = [
     id: "boissons",
     label: "Boissons",
     items: [
-      { id: "b-1", name: "Coca-Cola", description: "Canette 33cl", price: 3.0, image: tea },
-      { id: "b-2", name: "Bière Asahi", description: "Bière japonaise 33cl", price: 5.5, image: tea },
-      { id: "b-3", name: "Oasis", description: "Tropical 33cl", price: 3.0, image: tea },
-      { id: "b-4", name: "Bière Kirin", description: "Bière japonaise 33cl", price: 5.5, image: tea },
-      { id: "b-5", name: "Coca Zero", description: "Canette 33cl", price: 3.0, image: tea },
-      { id: "b-6", name: "Ramune", description: "Limonade japonaise", price: 4.5, image: tea },
-      { id: "b-7", name: "Fuze Tea", description: "Thé glacé pêche 33cl", price: 3.5, image: tea },
-      { id: "b-8", name: "San Pellegrino", description: "Eau pétillante 50cl", price: 3.5, image: tea },
-      { id: "b-9", name: "Orangina", description: "Canette 33cl", price: 3.0, image: tea },
+      { id: "b-1", name: "Coca-Cola", description: "Canette 33cl", price: 2.5, image: boCoca.url },
+      { id: "b-2", name: "Bière Asahi", description: "Bière japonaise 50cl", price: 4.0, image: boAsahi.url },
+      { id: "b-3", name: "Oasis", description: "Pomme cassis framboise 33cl", price: 2.5, image: boOasis.url },
+      { id: "b-4", name: "Bière Kirin Ichiban", description: "Bière japonaise 33cl", price: 4.0, image: boKirin.url },
+      { id: "b-5", name: "Coca-Cola Zéro", description: "Canette 33cl", price: 2.5, image: boCocaZero.url },
+      { id: "b-6", name: "Limonade Japonaise", description: "Ramune original", price: 3.9, image: boRamune.url },
+      { id: "b-7", name: "Fuze Tea", description: "Thé noir glacé pêche 33cl", price: 2.5, image: boFuze.url },
+      { id: "b-8", name: "San Pellegrino", description: "Eau pétillante 33cl", price: 2.5, image: boPellegrino.url },
+      { id: "b-9", name: "Orangina", description: "Canette 33cl", price: 2.5, image: boOrangina.url },
     ],
   },
   {
