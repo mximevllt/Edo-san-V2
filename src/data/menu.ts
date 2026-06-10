@@ -97,6 +97,7 @@ import platCalifornia from "@/assets/plateaux/torei-california.jpg.asset.json";
 import platFuto from "@/assets/plateaux/futo-torei.jpg.asset.json";
 import platMix from "@/assets/plateaux/menu-mix.jpg.asset.json";
 import platJeudi from "@/assets/plateaux/box-jeudi.jpg.asset.json";
+import platCheese from "@/assets/plateaux/torei-cheese.jpg.asset.json";
 
 export type Product = {
   id: string;
@@ -139,7 +140,7 @@ export const CATEGORIES: Category[] = [
       { id: "p-7", name: "Torei Spring Rolls", description: "Plateau 100% spring rolls", price: 20.5, image: platSpring.url, pieces: 24 },
       { id: "p-8", name: "Torei California", description: "Plateau 100% california rolls", price: 19.9, image: platCalifornia.url, pieces: 24 },
       { id: "p-9", name: "Futo Torei", description: "Gros makis généreux et colorés", price: 55.0, image: platFuto.url, pieces: 44 },
-      { id: "p-10", name: "Plateau Torei Cheese", description: "Sélection cheese nouvelle carte", price: 25.9, image: plateau },
+      { id: "p-10", name: "Plateau Torei Cheese", description: "Sélection cheese saumon, avocat, cream cheese", price: 22.5, image: platCheese.url, pieces: 24 },
       { id: "p-11", name: "Menu Mix", description: "Assortiment mixte pour partager", price: 22.5, image: platMix.url, pieces: 24 },
       { id: "p-12", name: "La Box du Jeudi", description: "L'offre exclusive du jeudi, généreuse et à prix doux", price: 39.0, image: platJeudi.url, pieces: 40, thursdayOnly: true },
     ],
