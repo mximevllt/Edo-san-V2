@@ -60,6 +60,14 @@ import nigGunkan from "@/assets/nigiri/gunkan.jpg.asset.json";
 import nigCrevette from "@/assets/nigiri/crevette.jpg.asset.json";
 import nigThon from "@/assets/nigiri/thon.jpg.asset.json";
 
+import saMixte from "@/assets/sashimi/mixte.jpg.asset.json";
+import saThon from "@/assets/sashimi/thon.jpg.asset.json";
+import saSaumon from "@/assets/sashimi/saumon.jpg.asset.json";
+import saImperial from "@/assets/sashimi/imperial.jpg.asset.json";
+import saBar from "@/assets/sashimi/bar.jpg.asset.json";
+import saTatakiSaumon from "@/assets/sashimi/tataki-saumon.jpg.asset.json";
+import saTatakiThon from "@/assets/sashimi/tataki-thon.jpg.asset.json";
+
 export type Product = {
   id: string;
   name: string;
