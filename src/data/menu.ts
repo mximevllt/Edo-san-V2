@@ -1,5 +1,5 @@
 import menu from "@/assets/prod-menu.jpg";
-import plateau from "@/assets/prod-plateau.jpg";
+
 import special from "@/assets/prod-special.jpg";
 import california from "@/assets/prod-california.jpg";
 import spring from "@/assets/prod-spring.jpg";
