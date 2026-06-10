@@ -77,6 +77,16 @@ import pokeVeggie from "@/assets/poke/veggie.jpg.asset.json";
 import pokeSaumonTeriyaki from "@/assets/poke/saumon-teriyaki.jpg.asset.json";
 import gyozaImg from "@/assets/gyoza/gyoza.jpg.asset.json";
 
+import spSaumonCheese from "@/assets/spring/saumon-cheese.jpg.asset.json";
+import spThonMenthe from "@/assets/spring/thon-menthe.jpg.asset.json";
+import spSaumonMenthe from "@/assets/spring/saumon-menthe.jpg.asset.json";
+import spAvocatCheese from "@/assets/spring/avocat-cheese.jpg.asset.json";
+import spCrevetteMenthe from "@/assets/spring/crevette-menthe.jpg.asset.json";
+import spCrevettePanee from "@/assets/spring/crevette-panee.jpg.asset.json";
+import spConcombreCheese from "@/assets/spring/concombre-cheese.jpg.asset.json";
+import spPouletMayo from "@/assets/spring/poulet-mayo.jpg.asset.json";
+import nouillesSatay from "@/assets/nouilles/satay.jpg.asset.json";
+
 export type Product = {
   id: string;
   name: string;
@@ -153,14 +163,14 @@ export const CATEGORIES: Category[] = [
     id: "spring-rolls",
     label: "Spring rolls",
     items: [
-      { id: "sp-1", name: "Spring Rolls Saumon Avocat Cheese", description: "Saumon, avocat, cheese", price: 8.5, image: spring },
-      { id: "sp-2", name: "Spring Rolls Thon Avocat Menthe Coriandre", description: "Thon, herbes fraîches", price: 8.9, image: spring },
-      { id: "sp-3", name: "Spring Roll Saumon Avocat Menthe Coriandre", description: "Saumon, menthe, coriandre", price: 8.5, image: spring },
-      { id: "sp-4", name: "Spring Rolls Avocat Cheese", description: "Avocat, cheese, fraîcheur", price: 7.5, image: spring },
-      { id: "sp-5", name: "Spring Rolls Crevette Avocat Menthe Coriandre", description: "Crevette, herbes fraîches", price: 8.9, image: spring },
-      { id: "sp-6", name: "Spring Rolls Crevette Panée Avocat", description: "Crevette panée, avocat", price: 8.9, image: spring },
-      { id: "sp-7", name: "Spring Rolls Concombre Cheese", description: "Concombre, cheese, légèreté", price: 7.0, image: spring },
-      { id: "sp-8", name: "Spring Rolls Poulet Avocat Mayonnaise", description: "Poulet, avocat, mayo", price: 8.5, image: spring },
+      { id: "sp-1", name: "Spring Rolls Saumon Avocat Cheese", description: "Saumon, avocat, cheese", price: 6.5, image: spSaumonCheese.url, pieces: 8 },
+      { id: "sp-2", name: "Spring Rolls Thon Avocat Menthe Coriandre", description: "Thon, herbes fraîches", price: 7.1, image: spThonMenthe.url, pieces: 8 },
+      { id: "sp-3", name: "Spring Roll Saumon Avocat Menthe Coriandre", description: "Saumon, menthe, coriandre", price: 7.1, image: spSaumonMenthe.url, pieces: 8 },
+      { id: "sp-4", name: "Spring Rolls Avocat Cheese", description: "Avocat, cheese, fraîcheur", price: 6.5, image: spAvocatCheese.url, pieces: 8 },
+      { id: "sp-5", name: "Spring Rolls Crevette Avocat Menthe Coriandre", description: "Crevette, herbes fraîches", price: 7.2, image: spCrevetteMenthe.url, pieces: 8 },
+      { id: "sp-6", name: "Spring Rolls Crevette Panée Avocat", description: "Crevette panée, avocat", price: 7.5, image: spCrevettePanee.url, pieces: 8 },
+      { id: "sp-7", name: "Spring Rolls Concombre Cheese", description: "Concombre, cheese, légèreté", price: 6.5, image: spConcombreCheese.url, pieces: 8 },
+      { id: "sp-8", name: "Spring Rolls Poulet Avocat Mayonnaise", description: "Poulet, avocat, mayo", price: 7.2, image: spPouletMayo.url, pieces: 8 },
     ],
   },
   {
@@ -237,6 +247,7 @@ export const CATEGORIES: Category[] = [
     label: "Ramen et nouilles",
     items: [
       { id: "r-1", name: "Ramen Maison", description: "Bouillon longuement mijoté, chashu, œuf mariné", price: 15.5, image: ramen },
+      { id: "r-2", name: "Nouilles Sautées Crevette Satay", description: "Nouilles sautées, crevettes, sauce satay, cacahuètes", price: 13.9, image: nouillesSatay.url },
     ],
   },
   {
