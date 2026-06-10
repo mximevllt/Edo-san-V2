@@ -87,6 +87,17 @@ import spConcombreCheese from "@/assets/spring/concombre-cheese.jpg.asset.json";
 import spPouletMayo from "@/assets/spring/poulet-mayo.jpg.asset.json";
 import nouillesSatay from "@/assets/nouilles/satay.jpg.asset.json";
 
+import platBoxSig from "@/assets/plateaux/box-signature.jpg.asset.json";
+import platToreiSushi from "@/assets/plateaux/torei-sushi.jpg.asset.json";
+import platChisana from "@/assets/plateaux/chisana-torei.jpg.asset.json";
+import platKiddo from "@/assets/plateaux/menu-kiddo.jpg.asset.json";
+import platNigiri from "@/assets/plateaux/nigiri-mix.jpg.asset.json";
+import platSpring from "@/assets/plateaux/torei-springrolls.jpg.asset.json";
+import platCalifornia from "@/assets/plateaux/torei-california.jpg.asset.json";
+import platFuto from "@/assets/plateaux/futo-torei.jpg.asset.json";
+import platMix from "@/assets/plateaux/menu-mix.jpg.asset.json";
+import platJeudi from "@/assets/plateaux/box-jeudi.jpg.asset.json";
+
 export type Product = {
   id: string;
   name: string;
@@ -94,6 +105,7 @@ export type Product = {
   price: number;
   image: string;
   pieces?: number;
+  thursdayOnly?: boolean;
 };
 
 
@@ -118,17 +130,18 @@ export const CATEGORIES: Category[] = [
     id: "plateaux",
     label: "Plateaux",
     items: [
-      { id: "p-1", name: "Plateau Signature", description: "Sélection 100 pièces du chef", price: 89.0, image: plateau },
-      { id: "p-2", name: "Plateau Torei Sushi", description: "Assortiment sushi premium", price: 32.0, image: plateau },
+      { id: "p-1", name: "Box Signature", description: "La box signature, généreuse et variée", price: 65.0, image: platBoxSig.url, pieces: 50 },
+      { id: "p-2", name: "Plateau Torei Sushi", description: "Assortiment sushi premium", price: 19.5, image: platToreiSushi.url, pieces: 10 },
       { id: "p-3", name: "Box Signature 44 pièces", description: "Le best of de la maison", price: 49.9, image: plateau },
-      { id: "p-4", name: "Chisana Torei", description: "Petit plateau découverte", price: 21.9, image: plateau },
-      { id: "p-5", name: "Menu Kiddo", description: "Menu enfant, pièces douces", price: 12.5, image: plateau },
-      { id: "p-6", name: "Plateau Nigiri", description: "Sélection nigiri nouvelle carte", price: 26.9, image: plateau },
-      { id: "p-7", name: "Torei Spring Rolls", description: "Plateau 100% spring rolls", price: 24.9, image: plateau },
-      { id: "p-8", name: "Torei California", description: "Plateau 100% california rolls", price: 23.9, image: plateau },
-      { id: "p-9", name: "Futo Torei", description: "Gros makis généreux et colorés", price: 22.5, image: plateau },
+      { id: "p-4", name: "Chisana Torei", description: "Petit plateau découverte", price: 14.9, image: platChisana.url, pieces: 12 },
+      { id: "p-5", name: "Menu Kiddo", description: "Menu enfant, pièces douces", price: 11.9, image: platKiddo.url, pieces: 10 },
+      { id: "p-6", name: "Plateau Nigiri Mix", description: "Sélection nigiri saumon, thon, crevette, bar", price: 19.9, image: platNigiri.url, pieces: 12 },
+      { id: "p-7", name: "Torei Spring Rolls", description: "Plateau 100% spring rolls", price: 20.5, image: platSpring.url, pieces: 24 },
+      { id: "p-8", name: "Torei California", description: "Plateau 100% california rolls", price: 19.9, image: platCalifornia.url, pieces: 24 },
+      { id: "p-9", name: "Futo Torei", description: "Gros makis généreux et colorés", price: 55.0, image: platFuto.url, pieces: 44 },
       { id: "p-10", name: "Plateau Torei Cheese", description: "Sélection cheese nouvelle carte", price: 25.9, image: plateau },
-      { id: "p-11", name: "Menu Mix", description: "Assortiment mixte pour partager", price: 27.9, image: plateau },
+      { id: "p-11", name: "Menu Mix", description: "Assortiment mixte pour partager", price: 22.5, image: platMix.url, pieces: 24 },
+      { id: "p-12", name: "La Box du Jeudi", description: "L'offre exclusive du jeudi, généreuse et à prix doux", price: 39.0, image: platJeudi.url, pieces: 40, thursdayOnly: true },
     ],
   },
   {

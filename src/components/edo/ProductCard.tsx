@@ -4,12 +4,17 @@ import { formatPrice } from "@/lib/cart-context";
 import { AddButton } from "./AddButton";
 
 export function ProductCard({ product }: { product: Product }) {
+  if (product.thursdayOnly && new Date().getDay() !== 4) {
+    return null;
+  }
+  const isJeudi = product.thursdayOnly === true;
   return (
     <motion.article
       whileHover={{ y: -6 }}
       transition={{ type: "spring", stiffness: 280, damping: 22 }}
-      className="group relative flex w-full min-w-0 max-w-full flex-col overflow-hidden rounded-2xl border border-cream/10 bg-ink-elevated"
+      className={`group relative flex w-full min-w-0 max-w-full flex-col overflow-hidden rounded-2xl border border-cream/10 bg-ink-elevated${isJeudi ? " jeudi-box" : ""}`}
     >
+
       <div className="relative aspect-[5/4] overflow-hidden bg-black/40">
         <motion.img
           src={product.image}
