@@ -118,6 +118,15 @@ import boFuze from "@/assets/boissons/fuze.jpg.asset.json";
 import boPellegrino from "@/assets/boissons/pellegrino.jpg.asset.json";
 import boOrangina from "@/assets/boissons/orangina.png.asset.json";
 
+import moCaramel from "@/assets/mochis/caramel.jpg.asset.json";
+import moChocoCoco from "@/assets/mochis/choco-coco.jpg.asset.json";
+import moFramboise from "@/assets/mochis/framboise.jpg.asset.json";
+import moLitchi from "@/assets/mochis/litchi.jpg.asset.json";
+import moMangue from "@/assets/mochis/mangue.jpg.asset.json";
+import moMiel from "@/assets/mochis/miel.jpg.asset.json";
+import moSakura from "@/assets/mochis/sakura.jpg.asset.json";
+import moYuzu from "@/assets/mochis/yuzu.jpg.asset.json";
+
 export type Product = {
   id: string;
   name: string;
@@ -330,9 +339,16 @@ export const CATEGORIES: Category[] = [
   },
   {
     id: "desserts",
-    label: "Desserts",
+    label: "Mochis & Desserts",
     items: [
-      { id: "d-1", name: "Dessert du moment", description: "Création sucrée du chef pâtissier", price: 5.9, image: mochi },
+      { id: "d-1", name: "Mochis Caramel", description: "Glace caramel, pâte de riz", price: 4.5, image: moCaramel.url, pieces: 2 },
+      { id: "d-2", name: "Mochis Choco-coco", description: "Glace chocolat coco, cacao", price: 4.5, image: moChocoCoco.url, pieces: 2 },
+      { id: "d-3", name: "Mochis Framboise", description: "Glace framboise, fruits rouges", price: 4.5, image: moFramboise.url, pieces: 2 },
+      { id: "d-4", name: "Mochis Litchi", description: "Glace litchi, fruité délicat", price: 4.5, image: moLitchi.url, pieces: 2 },
+      { id: "d-5", name: "Mochis Mangue", description: "Glace mangue, exotique", price: 4.5, image: moMangue.url, pieces: 2 },
+      { id: "d-6", name: "Mochis Miel", description: "Glace miel, douceur florale", price: 4.5, image: moMiel.url, pieces: 2 },
+      { id: "d-7", name: "Mochis Sakura", description: "Glace fleur de cerisier", price: 4.5, image: moSakura.url, pieces: 2 },
+      { id: "d-8", name: "Mochis Yuzu", description: "Glace yuzu, agrume japonais", price: 4.5, image: moYuzu.url, pieces: 2 },
     ],
   },
 ];
