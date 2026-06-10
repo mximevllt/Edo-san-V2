@@ -57,9 +57,7 @@ export function Checkout({ onBack }: { onBack: () => void }) {
   const period = useMemo(() => getPeriod(new Date()), []);
 
   // Options for the 3 buttons based on current time
-  const slotOptions = useMemo<
-    { id: Exclude<Slot, "later">; label: string }[]
-  >(() => {
+  const slotOptions = useMemo<{ id: Exclude<Slot, "later">; label: string }[]>(() => {
     if (period === "evening") {
       return [
         { id: "midi-tomorrow", label: "Commander pour demain midi" },
@@ -99,13 +97,9 @@ export function Checkout({ onBack }: { onBack: () => void }) {
 
   // Validation
   const billingOk =
-    billing.name.trim().length >= 2 &&
-    emailRe.test(billing.email.trim()) &&
-    phoneRe.test(billing.phone.trim());
+    billing.name.trim().length >= 2 && emailRe.test(billing.email.trim()) && phoneRe.test(billing.phone.trim());
   const addressOk =
-    address.number.trim().length > 0 &&
-    address.street.trim().length >= 2 &&
-    address.city.trim().length >= 2;
+    address.number.trim().length > 0 && address.street.trim().length >= 2 && address.city.trim().length >= 2;
   const scheduleOk = !!pickedDate && !!pickedTime;
   const formOk = billingOk && addressOk && scheduleOk;
 
@@ -167,9 +161,7 @@ export function Checkout({ onBack }: { onBack: () => void }) {
 
         {/* Delivery */}
         <section className="mt-8">
-          <h3 className="font-subtitle text-xs uppercase tracking-[0.22em] text-muted-foreground">
-            Livraison
-          </h3>
+          <h3 className="font-subtitle text-xs uppercase tracking-[0.22em] text-muted-foreground">Livraison</h3>
           <div className="mt-3 grid grid-cols-[90px_1fr] gap-3">
             <Field
               label="N°"
@@ -187,7 +179,7 @@ export function Checkout({ onBack }: { onBack: () => void }) {
           <div className="mt-3">
             <Field
               label="Ville"
-              placeholder="Paris"
+              placeholder="Cotignac"
               value={address.city}
               onChange={(v) => setAddress({ ...address, city: v })}
             />
@@ -275,9 +267,7 @@ export function Checkout({ onBack }: { onBack: () => void }) {
                         <span className="text-xs text-muted-foreground">
                           {pickedDate ? formatDate(pickedDate) : ""}
                         </span>
-                        {pickedTime && (
-                          <span className="font-display text-base text-cream">{pickedTime}</span>
-                        )}
+                        {pickedTime && <span className="font-display text-base text-cream">{pickedTime}</span>}
                       </div>
                       <div className="grid grid-cols-4 gap-2">
                         {TIMES.map((t) => {
@@ -324,9 +314,7 @@ export function Checkout({ onBack }: { onBack: () => void }) {
         >
           Payer
         </motion.button>
-        <p className="mt-2 text-center text-[11px] text-muted-foreground">
-          Paiement sécurisé · Livraison 25–35 min
-        </p>
+        <p className="mt-2 text-center text-[11px] text-muted-foreground">Paiement sécurisé · Livraison 25–35 min</p>
       </div>
     </motion.div>
   );
@@ -347,9 +335,7 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-        {label}
-      </span>
+      <span className="mb-1 block text-[11px] uppercase tracking-[0.18em] text-muted-foreground">{label}</span>
       <input
         type={type}
         value={value}
