@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Minus, Plus, ShoppingBag, Trash2, X } from "lucide-react";
 import { useCart, formatPrice } from "@/lib/cart-context";
 import { ADDONS } from "@/data/menu";
+import { Checkout } from "./Checkout";
 
-function CartBody() {
+function CartBody({ onCheckout }: { onCheckout: () => void }) {
   const { items, add, setQty, remove, total } = useCart();
   const DELIVERY = 3.5;
   const subtotal = total;
@@ -133,6 +135,7 @@ function CartBody() {
         <motion.button
           whileTap={{ scale: 0.98 }}
           disabled={items.length === 0}
+          onClick={onCheckout}
           className="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl bg-crimson py-4 font-subtitle text-base uppercase tracking-wider text-crimson-foreground transition disabled:cursor-not-allowed disabled:opacity-40 enabled:animate-crimson-pulse enabled:crimson-glow"
         >
           Valider ma commande
@@ -145,10 +148,36 @@ function CartBody() {
   );
 }
 
+function CartOrCheckout() {
+  const [view, setView] = useState<"cart" | "checkout">("cart");
+  return (
+    <div className="relative h-full overflow-hidden">
+      <AnimatePresence mode="wait" initial={false}>
+        {view === "cart" ? (
+          <motion.div
+            key="cart"
+            initial={{ x: "-100%", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: "-100%", opacity: 0 }}
+            transition={{ type: "spring", stiffness: 320, damping: 34 }}
+            className="absolute inset-0 overflow-y-auto"
+          >
+            <CartBody onCheckout={() => setView("checkout")} />
+          </motion.div>
+        ) : (
+          <div key="checkout" className="absolute inset-0">
+            <Checkout onBack={() => setView("cart")} />
+          </div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 export function DesktopCart() {
   return (
-    <aside className="sticky top-6 hidden h-[calc(100vh-120px)] overflow-y-auto border-l border-cream/10 bg-ink-elevated lg:block">
-      <CartBody />
+    <aside className="sticky top-6 hidden h-[calc(100vh-120px)] overflow-hidden border-l border-cream/10 bg-ink-elevated lg:block">
+      <CartOrCheckout />
     </aside>
   );
 }
@@ -181,7 +210,7 @@ export function MobileCart({ open, onOpen, onClose }: { open: boolean; onOpen: (
               >
                 <X className="h-4 w-4" />
               </button>
-              <CartBody />
+              <CartOrCheckout />
             </motion.div>
           </>
         )}
