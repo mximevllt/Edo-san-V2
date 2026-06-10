@@ -45,6 +45,20 @@ import chirashiSaumon from "@/assets/chirashi/saumon.jpg.asset.json";
 import chirashiThon from "@/assets/chirashi/thon.jpg.asset.json";
 import chirashiTartare from "@/assets/chirashi/tartare.jpg.asset.json";
 
+import srDragon from "@/assets/special/Dragon-Rolls-_8pc.jpg.asset.json";
+import srRoyalTazuna from "@/assets/special/Royal-Tazuna-_8pc.jpg.asset.json";
+import srTazunaArc from "@/assets/special/Tazuna-Arc-en-Ciel-_8pc.jpg.asset.json";
+import srTazunaYaki from "@/assets/special/Tazuna-Yaki-tai-_8pc.jpg.asset.json";
+
+export type Product = {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+  pieces?: number;
+};
+
 export type Product = {
   id: string;
   name: string;
