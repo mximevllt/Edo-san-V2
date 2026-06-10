@@ -171,7 +171,7 @@ export const CATEGORIES: Category[] = [
     items: [
       { id: "p-1", name: "Box Signature", description: "La box signature, généreuse et variée", price: 65.0, image: platBoxSig.url, pieces: 50 },
       { id: "p-2", name: "Plateau Torei Sushi", description: "Assortiment sushi premium", price: 19.5, image: platToreiSushi.url, pieces: 10 },
-      { id: "p-3", name: "Box Signature 44 pièces", description: "Le best of de la maison", price: 49.9, image: plateau },
+      
       { id: "p-4", name: "Chisana Torei", description: "Petit plateau découverte", price: 14.9, image: platChisana.url, pieces: 12 },
       { id: "p-5", name: "Menu Kiddo", description: "Menu enfant, pièces douces", price: 11.9, image: platKiddo.url, pieces: 10 },
       { id: "p-6", name: "Plateau Nigiri Mix", description: "Sélection nigiri saumon, thon, crevette, bar", price: 19.9, image: platNigiri.url, pieces: 12 },
