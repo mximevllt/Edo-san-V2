@@ -35,6 +35,15 @@ import calSalmonPillow from "@/assets/california/California-Salmon-Pillow-1.jpg.
 import calSaumon from "@/assets/california/California-Saumon-Avocat-Concombre.jpg.asset.json";
 import calSaumonCheese from "@/assets/california/California-Saumon-Cheese-Avocat-Concombre-1.jpg.asset.json";
 import calThon from "@/assets/california/California-Thon-Avocat-Concombre-1.jpg.asset.json";
+import calCrevetteSpicy from "@/assets/california/crevette-spicy.jpeg.asset.json";
+import calThonCuit from "@/assets/california/thon-cuit-avocat.jpg.asset.json";
+
+import chirashiImperiale from "@/assets/chirashi/imperiale.jpg.asset.json";
+import chirashiMarine from "@/assets/chirashi/marine.jpg.asset.json";
+import chirashiMixte from "@/assets/chirashi/mixte.jpg.asset.json";
+import chirashiSaumon from "@/assets/chirashi/saumon.jpg.asset.json";
+import chirashiThon from "@/assets/chirashi/thon.jpg.asset.json";
+import chirashiTartare from "@/assets/chirashi/tartare.jpg.asset.json";
 
 export type Product = {
   id: string;
