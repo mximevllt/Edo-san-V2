@@ -124,7 +124,7 @@ export function Checkout({ onBack }: { onBack: () => void }) {
       transition={{ type: "spring", stiffness: 320, damping: 34 }}
       className="flex h-full flex-col bg-ink-elevated"
     >
-      <div className="flex items-center justify-between border-b border-cream/10 px-6 py-5">
+      <div className="flex items-center justify-between border-b border-cream/10 px-6 py-5 pr-16 lg:pr-6">
         <button
           onClick={onBack}
           className="flex items-center gap-2 text-sm text-muted-foreground transition hover:text-cream"
