@@ -99,6 +99,11 @@ import platMix from "@/assets/plateaux/menu-mix.jpg.asset.json";
 import platJeudi from "@/assets/plateaux/box-jeudi.jpg.asset.json";
 import platCheese from "@/assets/plateaux/torei-cheese.jpg.asset.json";
 
+import midiKyoto from "@/assets/midi/kyoto.jpg.asset.json";
+import midiOsaka from "@/assets/midi/osaka.jpg.asset.json";
+import midiMatsue from "@/assets/midi/matsue.jpg.asset.json";
+import midiNara from "@/assets/midi/nara.jpg.asset.json";
+
 export type Product = {
   id: string;
   name: string;
