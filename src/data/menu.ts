@@ -127,6 +127,14 @@ import moMiel from "@/assets/mochis/miel.jpg.asset.json";
 import moSakura from "@/assets/mochis/sakura.jpg.asset.json";
 import moYuzu from "@/assets/mochis/yuzu.jpg.asset.json";
 
+import acRiz from "@/assets/accompagnements/riz.jpg.asset.json";
+import acAlgues from "@/assets/accompagnements/algues.jpg.asset.json";
+import acCalmars from "@/assets/accompagnements/calmars.jpg.asset.json";
+import acChou from "@/assets/accompagnements/chou.jpg.asset.json";
+import acMiso from "@/assets/accompagnements/miso.jpg.asset.json";
+import acMisoSaumon from "@/assets/accompagnements/miso-saumon.jpg.asset.json";
+import acMisoCrevette from "@/assets/accompagnements/miso-crevette.jpg.asset.json";
+
 export type Product = {
   id: string;
   name: string;
@@ -313,13 +321,13 @@ export const CATEGORIES: Category[] = [
     id: "accompagnements",
     label: "Accompagnements",
     items: [
-      { id: "a-1", name: "Salade d'algues", description: "Wakamé, sésame, sauce sésame", price: 4.9, image: edamame },
-      { id: "a-2", name: "Bol de riz", description: "Riz koshihikari vapeur", price: 3.0, image: edamame },
-      { id: "a-3", name: "Soupe miso crevette", description: "Miso, crevette, wakamé", price: 4.5, image: edamame },
-      { id: "a-4", name: "Soupe miso", description: "Tofu, wakamé, ciboule", price: 3.5, image: edamame },
-      { id: "a-5", name: "Salade de calmars", description: "Calmars, vinaigrette japonaise", price: 6.5, image: edamame },
-      { id: "a-6", name: "Salade de chou", description: "Chou frais, sauce sésame", price: 3.9, image: edamame },
-      { id: "a-7", name: "Soupe miso saumon", description: "Miso, saumon, wakamé", price: 4.9, image: edamame },
+      { id: "a-1", name: "Salade d'algues", description: "Wakamé, sésame, sauce sésame", price: 4.7, image: acAlgues.url },
+      { id: "a-2", name: "Riz vinaigré sésame", description: "Riz koshihikari, vinaigre, sésame", price: 3.0, image: acRiz.url },
+      { id: "a-3", name: "Velouté miso crevette", description: "Bouillon miso, crevettes, coriandre", price: 4.0, image: acMisoCrevette.url },
+      { id: "a-4", name: "Soupe miso", description: "Miso, poireau, algues nori", price: 3.0, image: acMiso.url },
+      { id: "a-5", name: "Salade de calmars", description: "Calmars, vinaigrette japonaise", price: 5.5, image: acCalmars.url },
+      { id: "a-6", name: "Salade de chou", description: "Chou frais, sauce sésame", price: 3.5, image: acChou.url },
+      { id: "a-7", name: "Soupe miso saumon", description: "Miso, saumon, tofu, wakamé", price: 3.7, image: acMisoSaumon.url },
     ],
   },
   {
