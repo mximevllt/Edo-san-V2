@@ -30,7 +30,7 @@ export function ProductCard({ product }: { product: Product }) {
             <h3 className="text-base leading-tight text-cream sm:text-lg">{product.name}</h3>
             {product.pieces ? (
               <span className="shrink-0 rounded-full border border-cream/20 bg-cream/5 px-2 py-0.5 text-[11px] font-medium text-cream/90 sm:text-xs">
-                {product.pieces} pc
+                ×{product.pieces}
               </span>
             ) : null}
           </div>

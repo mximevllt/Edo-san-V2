@@ -50,6 +50,16 @@ import srRoyalTazuna from "@/assets/special/Royal-Tazuna-_8pc.jpg.asset.json";
 import srTazunaArc from "@/assets/special/Tazuna-Arc-en-Ciel-_8pc.jpg.asset.json";
 import srTazunaYaki from "@/assets/special/Tazuna-Yaki-tai-_8pc.jpg.asset.json";
 
+import nigSaumon from "@/assets/nigiri/saumon.jpg.asset.json";
+import nigBarSnacke from "@/assets/nigiri/barsnacke.jpg.asset.json";
+import nigSaumonCheese from "@/assets/nigiri/saumoncheese.jpg.asset.json";
+import nigBar from "@/assets/nigiri/bar.jpg.asset.json";
+import nigSaumonSnacke from "@/assets/nigiri/saumonsnacke.jpg.asset.json";
+import nigThonSnacke from "@/assets/nigiri/thonsnacke.jpg.asset.json";
+import nigGunkan from "@/assets/nigiri/gunkan.jpg.asset.json";
+import nigCrevette from "@/assets/nigiri/crevette.jpg.asset.json";
+import nigThon from "@/assets/nigiri/thon.jpg.asset.json";
+
 export type Product = {
   id: string;
   name: string;
@@ -155,15 +165,15 @@ export const CATEGORIES: Category[] = [
     id: "nigiri",
     label: "Nigiri",
     items: [
-      { id: "n-1", name: "Nigiri Saumon", description: "2 pièces, riz tiède", price: 5.5, image: nigiri },
-      { id: "n-2", name: "Nigiri Bar Snacké", description: "2 pièces, bar snacké", price: 6.5, image: nigiri },
-      { id: "n-3", name: "Nigiri Saumon Cheese", description: "2 pièces, saumon, cheese", price: 6.0, image: nigiri },
-      { id: "n-4", name: "Nigiri Bar", description: "2 pièces, bar cru", price: 6.5, image: nigiri },
-      { id: "n-5", name: "Nigiri Saumon Snacké", description: "2 pièces, saumon snacké", price: 6.0, image: nigiri },
-      { id: "n-6", name: "Nigiri Thon Snacké", description: "2 pièces, thon snacké", price: 6.9, image: nigiri },
-      { id: "n-7", name: "Nigiri Gunkan Crabe Yuzu Hachi", description: "2 pièces, crabe, yuzu, hachi", price: 7.5, image: nigiri },
-      { id: "n-8", name: "Nigiri Crevette", description: "2 pièces, crevette", price: 5.9, image: nigiri },
-      { id: "n-9", name: "Nigiri Thon", description: "2 pièces, thon rouge", price: 6.5, image: nigiri },
+      { id: "n-1", name: "Nigiri Saumon", description: "Riz tiède, saumon", price: 5.5, image: nigSaumon.url, pieces: 2 },
+      { id: "n-2", name: "Nigiri Bar Snacké", description: "Bar snacké", price: 6.5, image: nigBarSnacke.url, pieces: 2 },
+      { id: "n-3", name: "Nigiri Saumon Cheese", description: "Saumon, cheese", price: 6.0, image: nigSaumonCheese.url, pieces: 2 },
+      { id: "n-4", name: "Nigiri Bar", description: "Bar cru", price: 6.5, image: nigBar.url, pieces: 2 },
+      { id: "n-5", name: "Nigiri Saumon Snacké", description: "Saumon snacké", price: 6.0, image: nigSaumonSnacke.url, pieces: 2 },
+      { id: "n-6", name: "Nigiri Thon Snacké", description: "Thon snacké", price: 6.9, image: nigThonSnacke.url, pieces: 2 },
+      { id: "n-7", name: "Nigiri Gunkan Crabe Yuzu Hachi", description: "Crabe, yuzu, hachi", price: 7.5, image: nigGunkan.url, pieces: 2 },
+      { id: "n-8", name: "Nigiri Crevette", description: "Crevette", price: 5.9, image: nigCrevette.url, pieces: 2 },
+      { id: "n-9", name: "Nigiri Thon", description: "Thon rouge", price: 6.5, image: nigThon.url, pieces: 2 },
     ],
   },
   {
