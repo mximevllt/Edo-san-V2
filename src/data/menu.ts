@@ -25,6 +25,17 @@ import makiCrevetteGuacamole from "@/assets/maki/Maki-Crevette-Guacamole.jpg.ass
 import makiConcombreCheese from "@/assets/maki/Maki-Concombre-Cheese.jpg.asset.json";
 import makiSaumon from "@/assets/maki/Maki-Saumon.jpg.asset.json";
 
+import calCrabe from "@/assets/california/California-Crabe-Yuzu-Masago-Pomme-Verte-1.jpg.asset.json";
+import calCrevetteMenthe from "@/assets/california/California-Crevette-Avocat-Menthe-1.jpg.asset.json";
+import calCrevettePanee from "@/assets/california/California-Crevette-Panée-Avocat-2.jpg.asset.json";
+import calPeruvian from "@/assets/california/California-Peruvian-1.jpg.asset.json";
+import calPouletMayo from "@/assets/california/California-Poulet-Avocat-Mayo-1.jpg.asset.json";
+import calPouletSpicy from "@/assets/california/California-Poulet-Concombre-Spicy-1.jpg.asset.json";
+import calSalmonPillow from "@/assets/california/California-Salmon-Pillow-1.jpg.asset.json";
+import calSaumon from "@/assets/california/California-Saumon-Avocat-Concombre.jpg.asset.json";
+import calSaumonCheese from "@/assets/california/California-Saumon-Cheese-Avocat-Concombre-1.jpg.asset.json";
+import calThon from "@/assets/california/California-Thon-Avocat-Concombre-1.jpg.asset.json";
+
 export type Product = {
   id: string;
   name: string;
