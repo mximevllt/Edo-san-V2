@@ -25,6 +25,17 @@ import makiCrevetteGuacamole from "@/assets/maki/Maki-Crevette-Guacamole.jpg.ass
 import makiConcombreCheese from "@/assets/maki/Maki-Concombre-Cheese.jpg.asset.json";
 import makiSaumon from "@/assets/maki/Maki-Saumon.jpg.asset.json";
 
+import calCrabe from "@/assets/california/California-Crabe-Yuzu-Masago-Pomme-Verte-1.jpg.asset.json";
+import calCrevetteMenthe from "@/assets/california/California-Crevette-Avocat-Menthe-1.jpg.asset.json";
+import calCrevettePanee from "@/assets/california/California-Crevette-Panée-Avocat-2.jpg.asset.json";
+import calPeruvian from "@/assets/california/California-Peruvian-1.jpg.asset.json";
+import calPouletMayo from "@/assets/california/California-Poulet-Avocat-Mayo-1.jpg.asset.json";
+import calPouletSpicy from "@/assets/california/California-Poulet-Concombre-Spicy-1.jpg.asset.json";
+import calSalmonPillow from "@/assets/california/California-Salmon-Pillow-1.jpg.asset.json";
+import calSaumon from "@/assets/california/California-Saumon-Avocat-Concombre.jpg.asset.json";
+import calSaumonCheese from "@/assets/california/California-Saumon-Cheese-Avocat-Concombre-1.jpg.asset.json";
+import calThon from "@/assets/california/California-Thon-Avocat-Concombre-1.jpg.asset.json";
+
 export type Product = {
   id: string;
   name: string;
@@ -81,18 +92,18 @@ export const CATEGORIES: Category[] = [
     id: "california",
     label: "California rolls",
     items: [
-      { id: "c-1", name: "California Saumon Avocat Concombre", description: "Le grand classique", price: 7.9, image: california },
-      { id: "c-2", name: "California Crevette Panée Avocat", description: "Crevette croustillante, avocat", price: 8.9, image: california },
-      { id: "c-3", name: "California Saumon Cheese Avocat Concombre", description: "Saumon, cheese, avocat", price: 8.5, image: california },
-      { id: "c-4", name: "California Poulet Concombre Spicy", description: "Poulet épicé, concombre", price: 8.5, image: california },
+      { id: "c-1", name: "California Saumon Avocat Concombre", description: "Le grand classique", price: 7.9, image: calSaumon.url },
+      { id: "c-2", name: "California Crevette Panée Avocat", description: "Crevette croustillante, avocat", price: 8.9, image: calCrevettePanee.url },
+      { id: "c-3", name: "California Saumon Cheese Avocat Concombre", description: "Saumon, cheese, avocat", price: 8.5, image: calSaumonCheese.url },
+      { id: "c-4", name: "California Poulet Concombre Spicy", description: "Poulet épicé, concombre", price: 8.5, image: calPouletSpicy.url },
       { id: "c-5", name: "California Signature", description: "Création maison du chef", price: 9.5, image: california },
-      { id: "c-6", name: "California Thon Avocat Concombre", description: "Thon rouge, avocat", price: 8.9, image: california },
-      { id: "c-7", name: "California Poulet Avocat Mayo", description: "Poulet, avocat, mayo japonaise", price: 8.5, image: california },
+      { id: "c-6", name: "California Thon Avocat Concombre", description: "Thon rouge, avocat", price: 8.9, image: calThon.url },
+      { id: "c-7", name: "California Poulet Avocat Mayo", description: "Poulet, avocat, mayo japonaise", price: 8.5, image: calPouletMayo.url },
       { id: "c-8", name: "California Thon Cuit Avocat", description: "Thon cuit, avocat onctueux", price: 8.5, image: california },
-      { id: "c-9", name: "California Peruvian", description: "Inspiration péruvienne, ceviche", price: 9.9, image: california },
-      { id: "c-10", name: "California Salmon Pillow", description: "Saumon en coussin, fondant", price: 9.5, image: california },
-      { id: "c-11", name: "California Crevette Avocat Menthe", description: "Crevette, menthe fraîche", price: 8.9, image: california },
-      { id: "c-12", name: "California Crabe Yuzu Masago Pomme Verte", description: "Crabe, yuzu, masago, pomme verte", price: 10.5, image: california },
+      { id: "c-9", name: "California Peruvian", description: "Inspiration péruvienne, ceviche", price: 9.9, image: calPeruvian.url },
+      { id: "c-10", name: "California Salmon Pillow", description: "Saumon en coussin, fondant", price: 9.5, image: calSalmonPillow.url },
+      { id: "c-11", name: "California Crevette Avocat Menthe", description: "Crevette, menthe fraîche", price: 8.9, image: calCrevetteMenthe.url },
+      { id: "c-12", name: "California Crabe Yuzu Masago Pomme Verte", description: "Crabe, yuzu, masago, pomme verte", price: 10.5, image: calCrabe.url },
     ],
   },
   {
