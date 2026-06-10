@@ -77,6 +77,16 @@ import pokeVeggie from "@/assets/poke/veggie.jpg.asset.json";
 import pokeSaumonTeriyaki from "@/assets/poke/saumon-teriyaki.jpg.asset.json";
 import gyozaImg from "@/assets/gyoza/gyoza.jpg.asset.json";
 
+import spSaumonCheese from "@/assets/spring/saumon-cheese.jpg.asset.json";
+import spThonMenthe from "@/assets/spring/thon-menthe.jpg.asset.json";
+import spSaumonMenthe from "@/assets/spring/saumon-menthe.jpg.asset.json";
+import spAvocatCheese from "@/assets/spring/avocat-cheese.jpg.asset.json";
+import spCrevetteMenthe from "@/assets/spring/crevette-menthe.jpg.asset.json";
+import spCrevettePanee from "@/assets/spring/crevette-panee.jpg.asset.json";
+import spConcombreCheese from "@/assets/spring/concombre-cheese.jpg.asset.json";
+import spPouletMayo from "@/assets/spring/poulet-mayo.jpg.asset.json";
+import nouillesSatay from "@/assets/nouilles/satay.jpg.asset.json";
+
 export type Product = {
   id: string;
   name: string;
