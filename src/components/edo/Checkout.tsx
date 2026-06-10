@@ -162,16 +162,10 @@ export function Checkout({ onBack }: { onBack: () => void }) {
         {/* Delivery */}
         <section className="mt-8">
           <h3 className="font-subtitle text-xs uppercase tracking-[0.22em] text-muted-foreground">Livraison</h3>
-          <div className="mt-3 grid grid-cols-[90px_1fr] gap-3">
+        <div className="mt-3">
             <Field
-              label="N°"
-              placeholder="12"
-              value={address.number}
-              onChange={(v) => setAddress({ ...address, number: v })}
-            />
-            <Field
-              label="Rue"
-              placeholder="Rue de la Paix"
+              label="Adresse"
+              placeholder="9 rue de l’Université"
               value={address.street}
               onChange={(v) => setAddress({ ...address, street: v })}
             />
