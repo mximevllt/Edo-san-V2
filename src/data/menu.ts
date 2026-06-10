@@ -47,10 +47,12 @@ import chirashiSaumon from "@/assets/chirashi/saumon.jpg.asset.json";
 import chirashiThon from "@/assets/chirashi/thon.jpg.asset.json";
 import chirashiTartare from "@/assets/chirashi/tartare.jpg.asset.json";
 
-import srDragon from "@/assets/special/Dragon-Rolls-_8pc.jpg.asset.json";
-import srRoyalTazuna from "@/assets/special/Royal-Tazuna-_8pc.jpg.asset.json";
-import srTazunaArc from "@/assets/special/Tazuna-Arc-en-Ciel-_8pc.jpg.asset.json";
-import srTazunaYaki from "@/assets/special/Tazuna-Yaki-tai-_8pc.jpg.asset.json";
+import srTiger from "@/assets/special/tiger-roll.jpg.asset.json";
+import srDragon from "@/assets/special/dragon-roll.jpg.asset.json";
+import srRainbow from "@/assets/special/rainbow-roll.jpg.asset.json";
+import srCrispySaumon from "@/assets/special/crispy-saumon.jpg.asset.json";
+import srMango from "@/assets/special/mango-roll.jpg.asset.json";
+import srCeviche from "@/assets/special/ceviche-roll.jpg.asset.json";
 
 import nigSaumon from "@/assets/nigiri/saumon.jpg.asset.json";
 import nigBarSnacke from "@/assets/nigiri/barsnacke.jpg.asset.json";
