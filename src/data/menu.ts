@@ -99,6 +99,11 @@ import platMix from "@/assets/plateaux/menu-mix.jpg.asset.json";
 import platJeudi from "@/assets/plateaux/box-jeudi.jpg.asset.json";
 import platCheese from "@/assets/plateaux/torei-cheese.jpg.asset.json";
 
+import midiKyoto from "@/assets/midi/kyoto.jpg.asset.json";
+import midiOsaka from "@/assets/midi/osaka.jpg.asset.json";
+import midiMatsue from "@/assets/midi/matsue.jpg.asset.json";
+import midiNara from "@/assets/midi/nara.jpg.asset.json";
+
 export type Product = {
   id: string;
   name: string;
@@ -121,10 +126,10 @@ export const CATEGORIES: Category[] = [
     id: "menus-midi",
     label: "Menus du midi",
     items: [
-      { id: "midi-1", name: "Plateau Kyoto", description: "Sélection signature du midi", price: 16.9, image: menu },
-      { id: "midi-2", name: "Plateau Osaka", description: "Assortiment équilibré, riz koshihikari", price: 17.9, image: menu },
-      { id: "midi-3", name: "Menu Matsue", description: "Le grand menu midi, généreux et raffiné", price: 19.9, image: menu },
-      { id: "midi-4", name: "Plateau Nara", description: "Plateau midi mixte, sauce yuzu", price: 18.5, image: menu },
+      { id: "midi-1", name: "Plateau Kyoto", description: "Sélection signature du midi", price: 13.9, image: midiKyoto.url, pieces: 12 },
+      { id: "midi-2", name: "Plateau Osaka", description: "Assortiment équilibré, riz koshihikari", price: 14.9, image: midiOsaka.url, pieces: 16 },
+      { id: "midi-3", name: "Menu Matsue", description: "Le grand menu midi, généreux et raffiné", price: 14.9, image: midiMatsue.url, pieces: 14 },
+      { id: "midi-4", name: "Plateau Nara", description: "Plateau midi mixte, sauce yuzu", price: 16.0, image: midiNara.url, pieces: 14 },
     ],
   },
   {
