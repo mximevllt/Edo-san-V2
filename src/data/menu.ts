@@ -87,6 +87,17 @@ import spConcombreCheese from "@/assets/spring/concombre-cheese.jpg.asset.json";
 import spPouletMayo from "@/assets/spring/poulet-mayo.jpg.asset.json";
 import nouillesSatay from "@/assets/nouilles/satay.jpg.asset.json";
 
+import platBoxSig from "@/assets/plateaux/box-signature.jpg.asset.json";
+import platToreiSushi from "@/assets/plateaux/torei-sushi.jpg.asset.json";
+import platChisana from "@/assets/plateaux/chisana-torei.jpg.asset.json";
+import platKiddo from "@/assets/plateaux/menu-kiddo.jpg.asset.json";
+import platNigiri from "@/assets/plateaux/nigiri-mix.jpg.asset.json";
+import platSpring from "@/assets/plateaux/torei-springrolls.jpg.asset.json";
+import platCalifornia from "@/assets/plateaux/torei-california.jpg.asset.json";
+import platFuto from "@/assets/plateaux/futo-torei.jpg.asset.json";
+import platMix from "@/assets/plateaux/menu-mix.jpg.asset.json";
+import platJeudi from "@/assets/plateaux/box-jeudi.jpg.asset.json";
+
 export type Product = {
   id: string;
   name: string;
