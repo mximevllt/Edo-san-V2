@@ -68,6 +68,15 @@ import saBar from "@/assets/sashimi/bar.jpg.asset.json";
 import saTatakiSaumon from "@/assets/sashimi/tataki-saumon.jpg.asset.json";
 import saTatakiThon from "@/assets/sashimi/tataki-thon.jpg.asset.json";
 
+import pokeBoeuf from "@/assets/poke/boeuf.jpg.asset.json";
+import pokeMixte from "@/assets/poke/mixte.jpg.asset.json";
+import pokePoulet from "@/assets/poke/poulet.jpg.asset.json";
+import pokeSaumon from "@/assets/poke/saumon.jpg.asset.json";
+import pokeThon from "@/assets/poke/thon.jpg.asset.json";
+import pokeVeggie from "@/assets/poke/veggie.jpg.asset.json";
+import pokeSaumonTeriyaki from "@/assets/poke/saumon-teriyaki.jpg.asset.json";
+import gyozaImg from "@/assets/gyoza/gyoza.jpg.asset.json";
+
 export type Product = {
   id: string;
   name: string;
