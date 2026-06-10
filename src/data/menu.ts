@@ -15,6 +15,16 @@ import edamame from "@/assets/prod-edamame.jpg";
 import tea from "@/assets/prod-tea.jpg";
 import mochi from "@/assets/prod-mochi.jpg";
 
+import makiSalmonRoll from "@/assets/maki/Maki-Salmon-Roll.jpg.asset.json";
+import makiAvocat from "@/assets/maki/Maki-Avocat.jpg.asset.json";
+import makiCrabeMasago from "@/assets/maki/Maki-Crabe-Masago-Poivre-Hachi.jpg.asset.json";
+import makiConcombre from "@/assets/maki/Maki-Concombre.jpg.asset.json";
+import makiAvocatCheese from "@/assets/maki/Maki-Avocat-Cheese.jpg.asset.json";
+import makiThonCiboulette from "@/assets/maki/Maki-Thon-Ciboulette.jpg.asset.json";
+import makiCrevetteGuacamole from "@/assets/maki/Maki-Crevette-Guacamole.jpg.asset.json";
+import makiConcombreCheese from "@/assets/maki/Maki-Concombre-Cheese.jpg.asset.json";
+import makiSaumon from "@/assets/maki/Maki-Saumon.jpg.asset.json";
+
 export type Product = {
   id: string;
   name: string;
@@ -103,15 +113,15 @@ export const CATEGORIES: Category[] = [
     id: "maki",
     label: "Maki",
     items: [
-      { id: "m-1", name: "Maki Salmon Roll", description: "Saumon, riz vinaigré", price: 6.5, image: maki },
-      { id: "m-2", name: "Maki Avocat", description: "Avocat fondant, sésame", price: 5.0, image: maki },
-      { id: "m-3", name: "Maki Crabe Masago Poivre Hachi", description: "Crabe, masago, poivre hachi", price: 7.5, image: maki },
-      { id: "m-4", name: "Maki Concombre", description: "Fraîcheur végétale", price: 5.0, image: maki },
-      { id: "m-5", name: "Maki Avocat Cheese", description: "Avocat, cheese onctueux", price: 5.5, image: maki },
-      { id: "m-6", name: "Maki Thon Ciboulette", description: "Thon, ciboulette ciselée", price: 7.0, image: maki },
-      { id: "m-7", name: "Maki Crevette Guacamole", description: "Crevette, guacamole maison", price: 7.5, image: maki },
-      { id: "m-8", name: "Maki Concombre Cheese", description: "Concombre, cheese", price: 5.5, image: maki },
-      { id: "m-9", name: "Maki Saumon", description: "Saumon premium", price: 6.5, image: maki },
+      { id: "m-1", name: "Maki Salmon Roll", description: "Saumon, riz vinaigré", price: 6.5, image: makiSalmonRoll.url },
+      { id: "m-2", name: "Maki Avocat", description: "Avocat fondant, sésame", price: 5.0, image: makiAvocat.url },
+      { id: "m-3", name: "Maki Crabe Masago Poivre Hachi", description: "Crabe, masago, poivre hachi", price: 7.5, image: makiCrabeMasago.url },
+      { id: "m-4", name: "Maki Concombre", description: "Fraîcheur végétale", price: 5.0, image: makiConcombre.url },
+      { id: "m-5", name: "Maki Avocat Cheese", description: "Avocat, cheese onctueux", price: 5.5, image: makiAvocatCheese.url },
+      { id: "m-6", name: "Maki Thon Ciboulette", description: "Thon, ciboulette ciselée", price: 7.0, image: makiThonCiboulette.url },
+      { id: "m-7", name: "Maki Crevette Guacamole", description: "Crevette, guacamole maison", price: 7.5, image: makiCrevetteGuacamole.url },
+      { id: "m-8", name: "Maki Concombre Cheese", description: "Concombre, cheese", price: 5.5, image: makiConcombreCheese.url },
+      { id: "m-9", name: "Maki Saumon", description: "Saumon premium", price: 6.5, image: makiSaumon.url },
     ],
   },
   {
