@@ -300,7 +300,6 @@ export const CATEGORIES: Category[] = [
     id: "ramen",
     label: "Ramen et nouilles",
     items: [
-      { id: "r-1", name: "Ramen Maison", description: "Bouillon longuement mijoté, chashu, œuf mariné", price: 15.5, image: ramen },
       { id: "r-2", name: "Nouilles Sautées Crevette Satay", description: "Nouilles sautées, crevettes, sauce satay, cacahuètes", price: 13.9, image: nouillesSatay.url },
     ],
   },
