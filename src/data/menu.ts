@@ -252,7 +252,7 @@ export const CATEGORIES: Category[] = [
     id: "gyoza",
     label: "Gyoza",
     items: [
-      { id: "g-1", name: "Gyoza Porc", description: "6 raviolis poêlés, sauce ponzu", price: 7.5, image: gyoza },
+      { id: "g-1", name: "Gyoza Porc", description: "Raviolis poêlés, sauce ponzu", price: 6.5, image: gyozaImg.url, pieces: 5 },
       { id: "g-2", name: "Gyoza Légumes", description: "6 raviolis, légumes croquants", price: 7.0, image: gyoza },
     ],
   },
