@@ -177,12 +177,12 @@ export const CATEGORIES: Category[] = [
     id: "chirashi",
     label: "Chirashi",
     items: [
-      { id: "ch-1", name: "Chirashi Thon Avocat", description: "Bol de riz, thon, avocat", price: 15.9, image: chirashi },
-      { id: "ch-2", name: "Chirashi Mariné", description: "Poissons marinés, sauce maison", price: 16.5, image: chirashi },
-      { id: "ch-3", name: "Tartare du Moment", description: "Tartare de poisson du jour", price: 15.5, image: chirashi },
-      { id: "ch-4", name: "Chirashi Impériale", description: "La grande sélection chirashi", price: 19.9, image: chirashi },
-      { id: "ch-5", name: "Chirashi Mixte Avocat", description: "Mix de poissons, avocat", price: 17.5, image: chirashi },
-      { id: "ch-6", name: "Chirashi Saumon Avocat", description: "Saumon, avocat, riz vinaigré", price: 14.9, image: chirashi },
+      { id: "ch-1", name: "Chirashi Thon Avocat", description: "Bol de riz, thon, avocat", price: 15.9, image: chirashiThon.url },
+      { id: "ch-2", name: "Chirashi Mariné", description: "Poissons marinés, sauce maison", price: 16.5, image: chirashiMarine.url },
+      { id: "ch-3", name: "Tartare du Moment", description: "Tartare de poisson du jour", price: 15.5, image: chirashiTartare.url },
+      { id: "ch-4", name: "Chirashi Impériale", description: "La grande sélection chirashi", price: 19.9, image: chirashiImperiale.url },
+      { id: "ch-5", name: "Chirashi Mixte Avocat", description: "Mix de poissons, avocat", price: 17.5, image: chirashiMixte.url },
+      { id: "ch-6", name: "Chirashi Saumon Avocat", description: "Saumon, avocat, riz vinaigré", price: 14.9, image: chirashiSaumon.url },
     ],
   },
   {
