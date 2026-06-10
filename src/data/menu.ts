@@ -68,6 +68,15 @@ import saBar from "@/assets/sashimi/bar.jpg.asset.json";
 import saTatakiSaumon from "@/assets/sashimi/tataki-saumon.jpg.asset.json";
 import saTatakiThon from "@/assets/sashimi/tataki-thon.jpg.asset.json";
 
+import pokeBoeuf from "@/assets/poke/boeuf.jpg.asset.json";
+import pokeMixte from "@/assets/poke/mixte.jpg.asset.json";
+import pokePoulet from "@/assets/poke/poulet.jpg.asset.json";
+import pokeSaumon from "@/assets/poke/saumon.jpg.asset.json";
+import pokeThon from "@/assets/poke/thon.jpg.asset.json";
+import pokeVeggie from "@/assets/poke/veggie.jpg.asset.json";
+import pokeSaumonTeriyaki from "@/assets/poke/saumon-teriyaki.jpg.asset.json";
+import gyozaImg from "@/assets/gyoza/gyoza.jpg.asset.json";
+
 export type Product = {
   id: string;
   name: string;
@@ -214,13 +223,13 @@ export const CATEGORIES: Category[] = [
     id: "poke",
     label: "Poke bowl",
     items: [
-      { id: "po-1", name: "Poke Mixte", description: "Mix de protéines, légumes croquants", price: 14.5, image: poke },
-      { id: "po-2", name: "Poke Saumon Teriyaki Snacké", description: "Saumon snacké, sauce teriyaki", price: 14.9, image: poke },
-      { id: "po-3", name: "Poke Poulet Teriyaki", description: "Poulet teriyaki, edamame", price: 13.5, image: poke },
-      { id: "po-4", name: "Poke Bœuf Oignon", description: "Bœuf mariné, oignons frits", price: 14.9, image: poke },
-      { id: "po-5", name: "Poke Veggie", description: "100% végétal, tofu, avocat", price: 12.9, image: poke },
-      { id: "po-6", name: "Poke Thon", description: "Thon mariné, mangue, sésame", price: 14.5, image: poke },
-      { id: "po-7", name: "Poke Saumon", description: "Saumon, avocat, edamame", price: 13.9, image: poke },
+      { id: "po-1", name: "Poke Mixte", description: "Mix de protéines, légumes croquants", price: 15.5, image: pokeMixte.url },
+      { id: "po-2", name: "Poke Saumon Teriyaki Snacké", description: "Saumon snacké, sauce teriyaki", price: 15.9, image: pokeSaumonTeriyaki.url },
+      { id: "po-3", name: "Poke Poulet Teriyaki", description: "Poulet teriyaki, edamame", price: 16.5, image: pokePoulet.url },
+      { id: "po-4", name: "Poke Bœuf Oignon", description: "Bœuf mariné, oignons frits", price: 16.5, image: pokeBoeuf.url },
+      { id: "po-5", name: "Poke Veggie Falafel", description: "Falafels, légumes, avocat", price: 14.5, image: pokeVeggie.url },
+      { id: "po-6", name: "Poke Thon", description: "Thon mariné, mangue, sésame", price: 15.5, image: pokeThon.url },
+      { id: "po-7", name: "Poke Saumon", description: "Saumon, avocat, edamame", price: 15.5, image: pokeSaumon.url },
     ],
   },
   {
@@ -243,7 +252,7 @@ export const CATEGORIES: Category[] = [
     id: "gyoza",
     label: "Gyoza",
     items: [
-      { id: "g-1", name: "Gyoza Porc", description: "6 raviolis poêlés, sauce ponzu", price: 7.5, image: gyoza },
+      { id: "g-1", name: "Gyoza Porc", description: "Raviolis poêlés, sauce ponzu", price: 6.5, image: gyozaImg.url, pieces: 5 },
       { id: "g-2", name: "Gyoza Légumes", description: "6 raviolis, légumes croquants", price: 7.0, image: gyoza },
     ],
   },
