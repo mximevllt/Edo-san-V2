@@ -148,10 +148,36 @@ function CartBody({ onCheckout }: { onCheckout: () => void }) {
   );
 }
 
+function CartOrCheckout() {
+  const [view, setView] = useState<"cart" | "checkout">("cart");
+  return (
+    <div className="relative h-full overflow-hidden">
+      <AnimatePresence mode="wait" initial={false}>
+        {view === "cart" ? (
+          <motion.div
+            key="cart"
+            initial={{ x: "-100%", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: "-100%", opacity: 0 }}
+            transition={{ type: "spring", stiffness: 320, damping: 34 }}
+            className="absolute inset-0 overflow-y-auto"
+          >
+            <CartBody onCheckout={() => setView("checkout")} />
+          </motion.div>
+        ) : (
+          <div key="checkout" className="absolute inset-0">
+            <Checkout onBack={() => setView("cart")} />
+          </div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 export function DesktopCart() {
   return (
-    <aside className="sticky top-6 hidden h-[calc(100vh-120px)] overflow-y-auto border-l border-cream/10 bg-ink-elevated lg:block">
-      <CartBody />
+    <aside className="sticky top-6 hidden h-[calc(100vh-120px)] overflow-hidden border-l border-cream/10 bg-ink-elevated lg:block">
+      <CartOrCheckout />
     </aside>
   );
 }
