@@ -277,9 +277,9 @@ export const CATEGORIES: Category[] = [
     id: "yakitori",
     label: "Yakitori",
     items: [
-      { id: "y-1", name: "Yakitori Saumon", description: "Brochettes de saumon grillé", price: 9.9, image: yakitori },
-      { id: "y-2", name: "Yakitori Tsukune", description: "Boulettes de poulet, sauce tare", price: 8.9, image: yakitori },
-      { id: "y-3", name: "Yakitori Poulet Caramel", description: "Poulet laqué au caramel", price: 9.5, image: yakitori },
+      { id: "y-1", name: "Yakitori Saumon", description: "Brochettes de saumon grillé", price: 6.0, image: yakSaumon.url, pieces: 2 },
+      { id: "y-2", name: "Yakitori Tsukune", description: "Boulettes de poulet, sauce tare", price: 5.5, image: yakTsukune.url, pieces: 2 },
+      { id: "y-3", name: "Yakitori Poulet Caramel", description: "Poulet laqué au caramel", price: 5.5, image: yakPouletCaramel.url, pieces: 2 },
     ],
   },
   {
