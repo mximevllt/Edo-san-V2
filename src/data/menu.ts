@@ -265,7 +265,7 @@ export const CATEGORIES: Category[] = [
       { id: "sa-2", name: "Sashimi Thon", description: "Tranches de thon rouge", price: 8.0, image: saThon.url, pieces: 6 },
       { id: "sa-3", name: "Sashimi Saumon", description: "Tranches de saumon", price: 7.5, image: saSaumon.url, pieces: 6 },
       { id: "sa-4", name: "Tataki Saumon", description: "Saumon snacké, condiments frais", price: 17.5, image: saTatakiSaumon.url, pieces: 12 },
-      { id: "sa-5", name: "Sashimi Mixte Découverte", description: "Saumon, thon, bar", price: 17.9, image: sashimi },
+      
       { id: "sa-6", name: "Tataki Thon", description: "Thon snacké, condiments frais", price: 18.5, image: saTatakiThon.url, pieces: 12 },
       { id: "sa-7", name: "Sashimi Imperial", description: "La grande sélection du chef", price: 16.0, image: saImperial.url, pieces: 12 },
       { id: "sa-8", name: "Sashimi Bar", description: "Bar délicat, jalapeño, masago", price: 7.8, image: saBar.url, pieces: 6 },
