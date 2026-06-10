@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Minus, Plus, ShoppingBag, Trash2, X } from "lucide-react";
 import { useCart, formatPrice } from "@/lib/cart-context";
 import { ADDONS } from "@/data/menu";
+import { Checkout } from "./Checkout";
 
-function CartBody() {
+function CartBody({ onCheckout }: { onCheckout: () => void }) {
   const { items, add, setQty, remove, total } = useCart();
   const DELIVERY = 3.5;
   const subtotal = total;
