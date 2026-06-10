@@ -191,10 +191,12 @@ export const CATEGORIES: Category[] = [
     id: "special-rolls",
     label: "Special rolls",
     items: [
-      { id: "sr-1", name: "Tazuna Arc-en-Ciel", description: "Roll multicolore, poissons nobles", price: 14.9, image: srTazunaArc.url, pieces: 8 },
-      { id: "sr-2", name: "Tazuna Yaki-tai", description: "Daurade snackée, sauce maison", price: 14.5, image: srTazunaYaki.url, pieces: 8 },
-      { id: "sr-3", name: "Royal Tazuna", description: "Le roll royal de la maison", price: 16.9, image: srRoyalTazuna.url, pieces: 8 },
-      { id: "sr-4", name: "Dragon Rolls", description: "Anguille, avocat, glaçage teriyaki", price: 15.5, image: srDragon.url, pieces: 8 },
+      { id: "sr-1", name: "Tiger Roll", description: "Roll signature tiger", price: 11.5, image: srTiger.url, pieces: 8 },
+      { id: "sr-2", name: "Dragon Roll", description: "Anguille, avocat, glaçage teriyaki", price: 11.5, image: srDragon.url, pieces: 8 },
+      { id: "sr-3", name: "Rainbow Roll", description: "Roll multicolore, poissons nobles", price: 11.0, image: srRainbow.url, pieces: 8 },
+      { id: "sr-4", name: "Crispy Saumon", description: "Saumon croustillant, sauce maison", price: 9.0, image: srCrispySaumon.url, pieces: 8 },
+      { id: "sr-5", name: "Mango Roll", description: "Mangue fraîche, création exotique", price: 9.8, image: srMango.url, pieces: 8 },
+      { id: "sr-6", name: "Céviché Roll", description: "Inspiration péruvienne, ceviche", price: 11.0, image: srCeviche.url, pieces: 8 },
     ],
   },
   {
