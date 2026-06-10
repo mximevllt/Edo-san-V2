@@ -38,27 +38,34 @@ function Index() {
             <CategoryNav onOpenCart={() => setCartOpen(true)} />
 
             <div className="mx-auto max-w-[1100px] px-4 py-12 lg:px-8">
-              {CATEGORIES.map((cat) => (
-                <section
-                  key={cat.id}
-                  id={cat.id}
-                  className="scroll-mt-nav mb-16 last:mb-8"
-                >
-                  <div className="mb-6 flex items-end justify-between gap-4">
-                    <h2 className="font-display text-3xl text-cream md:text-4xl">
-                      {cat.label}
-                    </h2>
-                    <span className="text-sm text-muted-foreground">
-                      {cat.items.length} produit{cat.items.length > 1 ? "s" : ""}
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-3 sm:gap-5 xl:grid-cols-3">
-                    {cat.items.map((p) => (
-                      <ProductCard key={p.id} product={p} />
-                    ))}
-                  </div>
-                </section>
-              ))}
+              {CATEGORIES.map((cat) => {
+                const isThursday = new Date().getDay() === 4;
+                const visibleItems = cat.items.filter(
+                  (p) => !p.thursdayOnly || isThursday,
+                );
+                if (visibleItems.length === 0) return null;
+                return (
+                  <section
+                    key={cat.id}
+                    id={cat.id}
+                    className="scroll-mt-nav mb-16 last:mb-8"
+                  >
+                    <div className="mb-6 flex items-end justify-between gap-4">
+                      <h2 className="font-display text-3xl text-cream md:text-4xl">
+                        {cat.label}
+                      </h2>
+                      <span className="text-sm text-muted-foreground">
+                        {visibleItems.length} produit{visibleItems.length > 1 ? "s" : ""}
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3 sm:gap-5 xl:grid-cols-3">
+                      {visibleItems.map((p) => (
+                        <ProductCard key={p.id} product={p} />
+                      ))}
+                    </div>
+                  </section>
+                );
+              })}
 
               <footer className="mt-20 border-t border-cream/10 pt-8 pb-32 text-sm text-muted-foreground lg:pb-8">
                 <p className="font-display text-2xl text-cream">Edo-San Sushi</p>
