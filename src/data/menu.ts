@@ -60,6 +60,14 @@ import nigGunkan from "@/assets/nigiri/gunkan.jpg.asset.json";
 import nigCrevette from "@/assets/nigiri/crevette.jpg.asset.json";
 import nigThon from "@/assets/nigiri/thon.jpg.asset.json";
 
+import saMixte from "@/assets/sashimi/mixte.jpg.asset.json";
+import saThon from "@/assets/sashimi/thon.jpg.asset.json";
+import saSaumon from "@/assets/sashimi/saumon.jpg.asset.json";
+import saImperial from "@/assets/sashimi/imperial.jpg.asset.json";
+import saBar from "@/assets/sashimi/bar.jpg.asset.json";
+import saTatakiSaumon from "@/assets/sashimi/tataki-saumon.jpg.asset.json";
+import saTatakiThon from "@/assets/sashimi/tataki-thon.jpg.asset.json";
+
 export type Product = {
   id: string;
   name: string;
@@ -180,14 +188,14 @@ export const CATEGORIES: Category[] = [
     id: "sashimi",
     label: "Sashimi",
     items: [
-      { id: "sa-1", name: "Sashimi Mixte", description: "Assortiment des poissons du jour", price: 16.9, image: sashimi },
-      { id: "sa-2", name: "Sashimi Thon", description: "9 tranches de thon rouge", price: 15.9, image: sashimi },
-      { id: "sa-3", name: "Sashimi Saumon", description: "9 tranches de saumon", price: 13.5, image: sashimi },
-      { id: "sa-4", name: "Sashimi Saumon Premium", description: "Sélection saumon premium", price: 15.5, image: sashimi },
+      { id: "sa-1", name: "Sashimi Mixte", description: "Assortiment saumon & thon", price: 7.8, image: saMixte.url, pieces: 6 },
+      { id: "sa-2", name: "Sashimi Thon", description: "Tranches de thon rouge", price: 8.0, image: saThon.url, pieces: 6 },
+      { id: "sa-3", name: "Sashimi Saumon", description: "Tranches de saumon", price: 7.5, image: saSaumon.url, pieces: 6 },
+      { id: "sa-4", name: "Tataki Saumon", description: "Saumon snacké, condiments frais", price: 17.5, image: saTatakiSaumon.url, pieces: 12 },
       { id: "sa-5", name: "Sashimi Mixte Découverte", description: "Saumon, thon, bar", price: 17.9, image: sashimi },
-      { id: "sa-6", name: "Sashimi Thon Premium", description: "Thon rouge premium", price: 17.9, image: sashimi },
-      { id: "sa-7", name: "Sashimi Imperial", description: "La grande sélection du chef", price: 24.9, image: sashimi },
-      { id: "sa-8", name: "Sashimi Bar", description: "Bar délicat, tranché finement", price: 16.5, image: sashimi },
+      { id: "sa-6", name: "Tataki Thon", description: "Thon snacké, condiments frais", price: 18.5, image: saTatakiThon.url, pieces: 12 },
+      { id: "sa-7", name: "Sashimi Imperial", description: "La grande sélection du chef", price: 16.0, image: saImperial.url, pieces: 12 },
+      { id: "sa-8", name: "Sashimi Bar", description: "Bar délicat, jalapeño, masago", price: 7.8, image: saBar.url, pieces: 6 },
     ],
   },
   {
