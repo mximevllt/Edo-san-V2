@@ -59,13 +59,6 @@ export type Product = {
   pieces?: number;
 };
 
-export type Product = {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  image: string;
-};
 
 export type Category = {
   id: string;
