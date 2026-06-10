@@ -162,10 +162,10 @@ export function Checkout({ onBack }: { onBack: () => void }) {
         {/* Delivery */}
         <section className="mt-8">
           <h3 className="font-subtitle text-xs uppercase tracking-[0.22em] text-muted-foreground">Livraison</h3>
-        <div className="mt-3">
+          <div className="mt-3">
             <Field
               label="Adresse"
-              placeholder="9 rue de l’Université"
+              placeholder="6 bis Rue Marceau"
               value={address.street}
               onChange={(v) => setAddress({ ...address, street: v })}
             />
@@ -173,7 +173,7 @@ export function Checkout({ onBack }: { onBack: () => void }) {
           <div className="mt-3">
             <Field
               label="Ville"
-              placeholder="Cotignac"
+              placeholder="Le Val"
               value={address.city}
               onChange={(v) => setAddress({ ...address, city: v })}
             />
