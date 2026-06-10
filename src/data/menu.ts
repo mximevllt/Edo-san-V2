@@ -189,10 +189,10 @@ export const CATEGORIES: Category[] = [
     id: "special-rolls",
     label: "Special rolls",
     items: [
-      { id: "sr-1", name: "Tazuna Arc-en-Ciel", description: "Roll multicolore, poissons nobles", price: 14.9, image: srTazunaArc.url, pieces: 8 },
-      { id: "sr-2", name: "Tazuna Yaki-tai", description: "Daurade snackée, sauce maison", price: 14.5, image: srTazunaYaki.url, pieces: 8 },
-      { id: "sr-3", name: "Royal Tazuna", description: "Le roll royal de la maison", price: 16.9, image: srRoyalTazuna.url, pieces: 8 },
-      { id: "sr-4", name: "Dragon Rolls", description: "Anguille, avocat, glaçage teriyaki", price: 15.5, image: srDragon.url, pieces: 8 },
+      { id: "sr-1", name: "Tazuna Arc-en-Ciel", description: "Roll multicolore, poissons nobles", price: 11.0, image: srTazunaArc.url, pieces: 8 },
+      { id: "sr-2", name: "Tazuna Yaki-Tai", description: "Daurade snackée, sauce maison", price: 11.5, image: srTazunaYaki.url, pieces: 8 },
+      { id: "sr-3", name: "Royal Tazuna", description: "Le roll royal de la maison", price: 11.0, image: srRoyalTazuna.url, pieces: 8 },
+      { id: "sr-4", name: "Dragon Rolls", description: "Anguille, avocat, glaçage teriyaki", price: 11.5, image: srDragon.url, pieces: 8 },
     ],
   },
   {
