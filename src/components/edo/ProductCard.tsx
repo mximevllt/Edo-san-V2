@@ -26,7 +26,14 @@ export function ProductCard({ product }: { product: Product }) {
 
       <div className="flex flex-1 flex-col gap-3 p-3 sm:p-5">
         <div className="flex-1 min-w-0">
-          <h3 className="text-base leading-tight text-cream sm:text-lg">{product.name}</h3>
+          <div className="flex items-start justify-between gap-2">
+            <h3 className="text-base leading-tight text-cream sm:text-lg">{product.name}</h3>
+            {product.pieces ? (
+              <span className="shrink-0 rounded-full border border-cream/20 bg-cream/5 px-2 py-0.5 text-[11px] font-medium text-cream/90 sm:text-xs">
+                {product.pieces} pc
+              </span>
+            ) : null}
+          </div>
           <p className="mt-1 text-xs text-muted-foreground line-clamp-2 sm:text-sm">
             {product.description}
           </p>
