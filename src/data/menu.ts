@@ -108,6 +108,16 @@ import yakSaumon from "@/assets/yakitori/saumon.jpg.asset.json";
 import yakTsukune from "@/assets/yakitori/tsukune.jpg.asset.json";
 import yakPouletCaramel from "@/assets/yakitori/poulet-caramel.jpg.asset.json";
 
+import boCoca from "@/assets/boissons/coca.png.asset.json";
+import boAsahi from "@/assets/boissons/asahi.png.asset.json";
+import boOasis from "@/assets/boissons/oasis.jpg.asset.json";
+import boKirin from "@/assets/boissons/kirin.jpg.asset.json";
+import boCocaZero from "@/assets/boissons/coca-zero.jpg.asset.json";
+import boRamune from "@/assets/boissons/ramune.png.asset.json";
+import boFuze from "@/assets/boissons/fuze.jpg.asset.json";
+import boPellegrino from "@/assets/boissons/pellegrino.jpg.asset.json";
+import boOrangina from "@/assets/boissons/orangina.png.asset.json";
+
 export type Product = {
   id: string;
   name: string;
