@@ -61,8 +61,6 @@ import nigThonSnacke from "@/assets/nigiri/thonsnacke.jpg.asset.json";
 import nigGunkan from "@/assets/nigiri/gunkan.jpg.asset.json";
 import nigCrevette from "@/assets/nigiri/crevette.jpg.asset.json";
 import nigThon from "@/assets/nigiri/thon.jpg.asset.json";
-import nigSaumonAvocat from "@/assets/nigiri/saumon-avocat.jpg.asset.json";
-import nigAvocat from "@/assets/nigiri/avocat.jpg.asset.json";
 
 import saMixte from "@/assets/sashimi/mixte.jpg.asset.json";
 import saThon from "@/assets/sashimi/thon.jpg.asset.json";
@@ -248,17 +246,15 @@ export const CATEGORIES: Category[] = [
     id: "nigiri",
     label: "Nigiri",
     items: [
-      { id: "n-1", name: "Nigiri Saumon", description: "Riz tiède, saumon", price: 4.4, image: nigSaumon.url, pieces: 2 },
-      { id: "n-2", name: "Nigiri Bar Snacké", description: "Bar snacké", price: 6.5, image: nigBarSnacke.url, pieces: 2 },
-      { id: "n-3", name: "Nigiri Saumon Cheese", description: "Saumon, cheese", price: 4.8, image: nigSaumonCheese.url, pieces: 2 },
-      { id: "n-4", name: "Nigiri Bar", description: "Bar cru", price: 6.5, image: nigBar.url, pieces: 2 },
-      { id: "n-5", name: "Nigiri Saumon Snacké", description: "Saumon snacké", price: 6.0, image: nigSaumonSnacke.url, pieces: 2 },
-      { id: "n-6", name: "Nigiri Thon Snacké", description: "Thon snacké", price: 6.9, image: nigThonSnacke.url, pieces: 2 },
-      { id: "n-7", name: "Nigiri Gunkan Crabe Yuzu Hachi", description: "Crabe, yuzu, hachi", price: 7.5, image: nigGunkan.url, pieces: 2 },
-      { id: "n-8", name: "Nigiri Crevette", description: "Crevette", price: 4.5, image: nigCrevette.url, pieces: 2 },
       { id: "n-9", name: "Nigiri Thon", description: "Thon rouge", price: 5.0, image: nigThon.url, pieces: 2 },
-      { id: "n-10", name: "Nigiri Saumon Avocat", description: "Saumon, avocat", price: 4.8, image: nigSaumonAvocat.url, pieces: 2 },
-      { id: "n-11", name: "Nigiri Avocat", description: "Avocat frais", price: 3.8, image: nigAvocat.url, pieces: 2 },
+      { id: "n-6", name: "Nigiri Thon Snacké", description: "Thon snacké", price: 5.3, image: nigThonSnacke.url, pieces: 2 },
+      { id: "n-1", name: "Nigiri Saumon", description: "Riz tiède, saumon", price: 4.7, image: nigSaumon.url, pieces: 2 },
+      { id: "n-5", name: "Nigiri Saumon Snacké", description: "Saumon snacké", price: 5.0, image: nigSaumonSnacke.url, pieces: 2 },
+      { id: "n-3", name: "Nigiri Saumon Cheese", description: "Saumon, cheese", price: 5.0, image: nigSaumonCheese.url, pieces: 2 },
+      { id: "n-8", name: "Nigiri Crevette", description: "Crevette", price: 4.8, image: nigCrevette.url, pieces: 2 },
+      { id: "n-4", name: "Nigiri Bar", description: "Bar cru", price: 5.2, image: nigBar.url, pieces: 2 },
+      { id: "n-2", name: "Nigiri Bar Snacké", description: "Bar snacké", price: 5.5, image: nigBarSnacke.url, pieces: 2 },
+      { id: "n-7", name: "Nigiri Gunkan Crabe Yuzu Hachi", description: "Crabe, yuzu, hachi", price: 6.3, image: nigGunkan.url, pieces: 2 },
     ],
   },
   {
@@ -269,7 +265,7 @@ export const CATEGORIES: Category[] = [
       { id: "sa-2", name: "Sashimi Thon", description: "Tranches de thon rouge", price: 8.0, image: saThon.url, pieces: 6 },
       { id: "sa-3", name: "Sashimi Saumon", description: "Tranches de saumon", price: 7.5, image: saSaumon.url, pieces: 6 },
       { id: "sa-4", name: "Tataki Saumon", description: "Saumon snacké, condiments frais", price: 17.5, image: saTatakiSaumon.url, pieces: 12 },
-      { id: "sa-5", name: "Sashimi Mixte Découverte", description: "Saumon, thon, bar", price: 17.9, image: sashimi },
+      
       { id: "sa-6", name: "Tataki Thon", description: "Thon snacké, condiments frais", price: 18.5, image: saTatakiThon.url, pieces: 12 },
       { id: "sa-7", name: "Sashimi Imperial", description: "La grande sélection du chef", price: 16.0, image: saImperial.url, pieces: 12 },
       { id: "sa-8", name: "Sashimi Bar", description: "Bar délicat, jalapeño, masago", price: 7.8, image: saBar.url, pieces: 6 },
@@ -304,7 +300,6 @@ export const CATEGORIES: Category[] = [
     id: "ramen",
     label: "Ramen et nouilles",
     items: [
-      { id: "r-1", name: "Ramen Maison", description: "Bouillon longuement mijoté, chashu, œuf mariné", price: 15.5, image: ramen },
       { id: "r-2", name: "Nouilles Sautées Crevette Satay", description: "Nouilles sautées, crevettes, sauce satay, cacahuètes", price: 13.9, image: nouillesSatay.url },
     ],
   },
@@ -321,8 +316,7 @@ export const CATEGORIES: Category[] = [
     id: "gyoza",
     label: "Gyoza",
     items: [
-      { id: "g-1", name: "Gyoza Porc", description: "Raviolis poêlés, sauce ponzu", price: 6.5, image: gyozaImg.url, pieces: 5 },
-      { id: "g-2", name: "Gyoza Légumes", description: "6 raviolis, légumes croquants", price: 7.0, image: gyoza },
+      { id: "g-1", name: "Gyoza", description: "Raviolis poêlés, sauce ponzu", price: 6.5, image: gyozaImg.url, pieces: 5 },
     ],
   },
   {
