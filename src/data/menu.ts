@@ -105,6 +105,7 @@ export type Product = {
   price: number;
   image: string;
   pieces?: number;
+  thursdayOnly?: boolean;
 };
 
 
