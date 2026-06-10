@@ -210,7 +210,7 @@ export function MobileCart({ open, onOpen, onClose }: { open: boolean; onOpen: (
               >
                 <X className="h-4 w-4" />
               </button>
-              <CartBody />
+              <CartOrCheckout />
             </motion.div>
           </>
         )}
