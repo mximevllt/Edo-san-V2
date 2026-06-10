@@ -19,7 +19,7 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Edo-San Sushi" },
       {
         property: "og:description",
-        content: "Artisanal Sushi, Crafted to Order, Delivered to Your Door.",
+        content: "Sushis frais et artisanaux.",
       },
     ],
   }),
@@ -40,20 +40,12 @@ function Index() {
             <div className="mx-auto max-w-[1100px] px-4 py-12 lg:px-8">
               {CATEGORIES.map((cat) => {
                 const isThursday = new Date().getDay() === 4;
-                const visibleItems = cat.items.filter(
-                  (p) => !p.thursdayOnly || isThursday,
-                );
+                const visibleItems = cat.items.filter((p) => !p.thursdayOnly || isThursday);
                 if (visibleItems.length === 0) return null;
                 return (
-                  <section
-                    key={cat.id}
-                    id={cat.id}
-                    className="scroll-mt-nav mb-16 last:mb-8"
-                  >
+                  <section key={cat.id} id={cat.id} className="scroll-mt-nav mb-16 last:mb-8">
                     <div className="mb-6 flex items-end justify-between gap-4">
-                      <h2 className="font-display text-3xl text-cream md:text-4xl">
-                        {cat.label}
-                      </h2>
+                      <h2 className="font-display text-3xl text-cream md:text-4xl">{cat.label}</h2>
                       <span className="text-sm text-muted-foreground">
                         {visibleItems.length} produit{visibleItems.length > 1 ? "s" : ""}
                       </span>
@@ -70,8 +62,8 @@ function Index() {
               <footer className="mt-20 border-t border-cream/10 pt-8 pb-32 text-sm text-muted-foreground lg:pb-8">
                 <p className="font-display text-2xl text-cream">Edo-San Sushi</p>
                 <p className="mt-2 max-w-md">
-                  Maison de sushi artisanale. Préparé chaque jour avec des poissons sélectionnés
-                  et un riz koshihikari cuit à la minute.
+                  Maison de sushi artisanale. Préparé chaque jour avec des poissons sélectionnés et un riz koshihikari
+                  cuit à la minute.
                 </p>
                 <p className="mt-4">© {new Date().getFullYear()} Edo-San — Tous droits réservés.</p>
               </footer>

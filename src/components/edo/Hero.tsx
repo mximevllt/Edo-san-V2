@@ -15,25 +15,20 @@ export function Hero() {
         >
           <div className="mb-6 flex items-center gap-3">
             <img src={logo.url} alt="" aria-hidden className="h-10 w-10" />
-            <span className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
-              Tokyo · Paris · Livraison
-            </span>
+            <span className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Cotignac · Le Val</span>
           </div>
           <h1 className="font-display text-[clamp(3rem,8vw,6.5rem)] leading-[0.95] text-cream">
             Edo-San
             <br />
             <span className="text-crimson">Sushi</span>
           </h1>
-          <p className="mt-6 max-w-md text-lg text-muted-foreground">
-            Artisanal Sushi, Crafted to Order, Delivered to Your Door.
-          </p>
+          <p className="mt-6 max-w-md text-lg text-muted-foreground">Sushis frais et artisanaux</p>
           <div className="mt-8 flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-crimson animate-crimson-pulse" />
-              Ouvert · livraison 25 min
             </div>
             <div className="hidden h-4 w-px bg-cream/20 sm:block" />
-            <span>Poissons sauvages · Riz koshihikari</span>
+            <span>Ouverts du Mardi au Dimanche</span>
           </div>
         </motion.div>
 
