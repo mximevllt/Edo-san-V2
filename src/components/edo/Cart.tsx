@@ -13,7 +13,7 @@ function CartBody({ onCheckout }: { onCheckout: () => void }) {
 
   return (
     <div className="flex h-full flex-col">
-      <div className="flex items-center justify-between border-b border-cream/10 px-6 py-5">
+      <div className="flex items-center justify-between border-b border-cream/10 px-6 py-5 pr-16 lg:pr-6">
         <h2 className="font-display text-2xl text-cream">Mon panier</h2>
         <span className="text-sm text-muted-foreground">
           {items.reduce((a, i) => a + i.quantity, 0)} article{items.length > 1 ? "s" : ""}
