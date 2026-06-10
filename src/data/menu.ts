@@ -61,6 +61,8 @@ import nigThonSnacke from "@/assets/nigiri/thonsnacke.jpg.asset.json";
 import nigGunkan from "@/assets/nigiri/gunkan.jpg.asset.json";
 import nigCrevette from "@/assets/nigiri/crevette.jpg.asset.json";
 import nigThon from "@/assets/nigiri/thon.jpg.asset.json";
+import nigSaumonAvocat from "@/assets/nigiri/saumon-avocat.jpg.asset.json";
+import nigAvocat from "@/assets/nigiri/avocat.jpg.asset.json";
 
 import saMixte from "@/assets/sashimi/mixte.jpg.asset.json";
 import saThon from "@/assets/sashimi/thon.jpg.asset.json";
