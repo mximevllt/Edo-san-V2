@@ -24,6 +24,8 @@ import makiThonCiboulette from "@/assets/maki/Maki-Thon-Ciboulette.jpg.asset.jso
 import makiCrevetteGuacamole from "@/assets/maki/Maki-Crevette-Guacamole.jpg.asset.json";
 import makiConcombreCheese from "@/assets/maki/Maki-Concombre-Cheese.jpg.asset.json";
 import makiSaumon from "@/assets/maki/Maki-Saumon.jpg.asset.json";
+import makiSaumonCheese from "@/assets/maki/Maki-Saumon-Cheese.jpg.asset.json";
+import makiCrevetteAvocatMenthe from "@/assets/maki/Maki-Crevette-Avocat-Menthe.jpg.asset.json";
 
 import calCrabe from "@/assets/california/California-Crabe-Yuzu-Masago-Pomme-Verte-1.jpg.asset.json";
 import calCrevetteMenthe from "@/assets/california/California-Crevette-Avocat-Menthe-1.jpg.asset.json";
