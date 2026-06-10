@@ -15,6 +15,16 @@ import edamame from "@/assets/prod-edamame.jpg";
 import tea from "@/assets/prod-tea.jpg";
 import mochi from "@/assets/prod-mochi.jpg";
 
+import makiSalmonRoll from "@/assets/maki/Maki-Salmon-Roll.jpg.asset.json";
+import makiAvocat from "@/assets/maki/Maki-Avocat.jpg.asset.json";
+import makiCrabeMasago from "@/assets/maki/Maki-Crabe-Masago-Poivre-Hachi.jpg.asset.json";
+import makiConcombre from "@/assets/maki/Maki-Concombre.jpg.asset.json";
+import makiAvocatCheese from "@/assets/maki/Maki-Avocat-Cheese.jpg.asset.json";
+import makiThonCiboulette from "@/assets/maki/Maki-Thon-Ciboulette.jpg.asset.json";
+import makiCrevetteGuacamole from "@/assets/maki/Maki-Crevette-Guacamole.jpg.asset.json";
+import makiConcombreCheese from "@/assets/maki/Maki-Concombre-Cheese.jpg.asset.json";
+import makiSaumon from "@/assets/maki/Maki-Saumon.jpg.asset.json";
+
 export type Product = {
   id: string;
   name: string;
