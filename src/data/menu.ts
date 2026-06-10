@@ -97,6 +97,7 @@ import platCalifornia from "@/assets/plateaux/torei-california.jpg.asset.json";
 import platFuto from "@/assets/plateaux/futo-torei.jpg.asset.json";
 import platMix from "@/assets/plateaux/menu-mix.jpg.asset.json";
 import platJeudi from "@/assets/plateaux/box-jeudi.jpg.asset.json";
+import platCheese from "@/assets/plateaux/torei-cheese.jpg.asset.json";
 
 export type Product = {
   id: string;
