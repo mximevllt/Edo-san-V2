@@ -18,23 +18,12 @@ export function Navbar() {
   const [indicator, setIndicator] = useState<{ left: number; width: number }>({ left: 0, width: 0 });
 
   const [atTop, setAtTop] = useState(true);
-  const [hover, setHover] = useState(false);
-  // "forced open" after the user taps the shrunk pill — stays open until they scroll down again
-  const [forcedOpen, setForcedOpen] = useState(false);
-  const lastScrollY = useRef(0);
 
-  const expanded = atTop || hover || forcedOpen;
+  const expanded = atTop;
 
-  // Track scroll position + direction
+  // Track scroll position — pill expands only when scrolled to the very top
   useEffect(() => {
-    lastScrollY.current = window.scrollY;
-    const onScroll = () => {
-      const y = window.scrollY;
-      const goingDown = y > lastScrollY.current + 2;
-      setAtTop(y < 8);
-      if (goingDown && y > 24) setForcedOpen(false);
-      lastScrollY.current = y;
-    };
+    const onScroll = () => setAtTop(window.scrollY < 8);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -64,19 +53,11 @@ export function Navbar() {
       <nav
         ref={navRef}
         aria-label="Navigation principale"
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-        onClick={() => {
-          if (!expanded) setForcedOpen(true);
-        }}
-        onTouchStart={() => {
-          if (!expanded) setForcedOpen(true);
-        }}
         className={[
           "pointer-events-auto relative flex items-center rounded-full border border-white/10 bg-black/40",
           "shadow-[0_8px_32px_rgba(0,0,0,0.45)] backdrop-blur-xl backdrop-saturate-150",
           "transition-[padding,height,width] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
-          expanded ? "p-1" : "p-0 cursor-pointer",
+          expanded ? "p-1" : "p-0",
         ].join(" ")}
         style={{ height: expanded ? 44 : 8 }}
       >
