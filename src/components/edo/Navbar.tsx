@@ -40,7 +40,7 @@ export function Navbar() {
   const hasIndicator = indicator.width > 0;
 
   return (
-    <div className="absolute inset-x-0 top-3 z-[60] flex justify-center px-4">
+    <div className="relative z-[60] flex justify-center px-4 pt-3">
       <nav
         ref={navRef}
         aria-label="Navigation principale"
