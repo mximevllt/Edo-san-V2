@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 
 const ITEMS = [
   { to: "/", label: "Commande", exact: true },
@@ -17,19 +17,7 @@ export function Navbar() {
   const itemRefs = useRef<Array<HTMLAnchorElement | null>>([]);
   const [indicator, setIndicator] = useState<{ left: number; width: number }>({ left: 0, width: 0 });
 
-  const [atTop, setAtTop] = useState(true);
-
-  const expanded = atTop;
-
-  // Track scroll position — pill expands only when scrolled to the very top
-  useEffect(() => {
-    const onScroll = () => setAtTop(window.scrollY < 8);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  // Measure indicator position whenever layout (expanded state / active route) changes
+  // Measure indicator position whenever route or layout changes
   useLayoutEffect(() => {
     const measure = () => {
       const nav = navRef.current;
@@ -40,44 +28,41 @@ export function Navbar() {
       setIndicator({ left: r.left - navRect.left, width: r.width });
     };
     measure();
-    const id = window.setTimeout(measure, 320); // re-measure after transition
+    // Re-measure once fonts settle
+    const id = window.setTimeout(measure, 120);
     window.addEventListener("resize", measure);
     return () => {
       window.clearTimeout(id);
       window.removeEventListener("resize", measure);
     };
-  }, [activeIndex, expanded]);
+  }, [activeIndex]);
+
+  const hasIndicator = indicator.width > 0;
 
   return (
-    <div className="pointer-events-none fixed inset-x-0 top-3 z-[60] flex justify-center px-4">
+    <div className="relative z-[60] flex justify-center px-4 pt-3">
       <nav
         ref={navRef}
         aria-label="Navigation principale"
         className={[
-          "pointer-events-auto relative flex items-center rounded-full border border-white/10 bg-black/40",
+          "relative flex items-center rounded-full border border-white/10 bg-black/40 p-1",
           "shadow-[0_8px_32px_rgba(0,0,0,0.45)] backdrop-blur-xl backdrop-saturate-150",
-          "transition-[padding,height,width] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
-          expanded ? "p-1" : "p-0",
         ].join(" ")}
-        style={{ height: expanded ? 44 : 8 }}
       >
-        {/* Sliding indicator */}
+        {/* Sliding toggle indicator — translateX for buttery glide */}
         <span
           aria-hidden
-          className="absolute top-1 bottom-1 rounded-full bg-crimson transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+          className="absolute top-1 bottom-1 left-0 rounded-full bg-crimson will-change-transform"
           style={{
-            left: indicator.left,
-            width: indicator.width,
-            opacity: expanded && indicator.width > 0 ? 1 : 0,
+            width: hasIndicator ? indicator.width : 0,
+            transform: `translate3d(${indicator.left}px, 0, 0)`,
+            transition:
+              "transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1), width 400ms cubic-bezier(0.22, 1, 0.36, 1), opacity 200ms ease-out",
+            opacity: hasIndicator ? 1 : 0,
           }}
         />
 
-        <div
-          className={[
-            "relative flex items-center gap-1 overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
-            expanded ? "max-w-[420px] opacity-100" : "max-w-0 opacity-0",
-          ].join(" ")}
-        >
+        <div className="relative flex items-center gap-1">
           {ITEMS.map((item, i) => {
             const isActive = i === activeIndex;
             return (
