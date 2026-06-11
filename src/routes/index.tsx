@@ -6,6 +6,7 @@ import { Hero } from "@/components/edo/Hero";
 import { CategoryNav } from "@/components/edo/CategoryNav";
 import { ProductCard } from "@/components/edo/ProductCard";
 import { DesktopCart, MobileCart } from "@/components/edo/Cart";
+import { Navbar } from "@/components/edo/Navbar";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -34,6 +35,7 @@ function Index() {
       <div className="min-h-screen max-w-full bg-ink">
         <div className="grid items-start lg:grid-cols-[minmax(0,1fr)_400px] xl:grid-cols-[minmax(0,1fr)_440px]">
           <main className="min-w-0 w-full max-w-full">
+            <Navbar />
             <Hero />
             <CategoryNav onOpenCart={() => setCartOpen(true)} />
 
