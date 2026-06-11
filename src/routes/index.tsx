@@ -35,6 +35,7 @@ function Index() {
       <div className="min-h-screen max-w-full bg-ink">
         <div className="grid items-start lg:grid-cols-[minmax(0,1fr)_400px] xl:grid-cols-[minmax(0,1fr)_440px]">
           <main className="min-w-0 w-full max-w-full">
+            <Navbar />
             <Hero />
             <CategoryNav onOpenCart={() => setCartOpen(true)} />
 
