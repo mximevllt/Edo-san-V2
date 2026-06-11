@@ -6,6 +6,7 @@ import { Hero } from "@/components/edo/Hero";
 import { CategoryNav } from "@/components/edo/CategoryNav";
 import { ProductCard } from "@/components/edo/ProductCard";
 import { DesktopCart, MobileCart } from "@/components/edo/Cart";
+import { Navbar } from "@/components/edo/Navbar";
 
 export const Route = createFileRoute("/")({
   head: () => ({
