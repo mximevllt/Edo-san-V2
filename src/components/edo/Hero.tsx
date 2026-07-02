@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import hero from "@/assets/hero-sushi.jpg";
-import logo from "@/assets/edo-logo.png.asset.json";
+
+const logo = "/edo-assets/01-Logo-Edo-San-Sushi-blanc.png";
 
 export function Hero() {
   return (
@@ -14,7 +15,7 @@ export function Hero() {
           className="flex flex-col justify-center"
         >
           <div className="mb-6 flex items-center gap-3">
-            <img src={logo.url} alt="" aria-hidden className="h-10 w-10" />
+            <img src={logo} alt="" aria-hidden className="h-10 w-10 object-contain" />
             <span className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Cotignac · Le Val</span>
           </div>
           <h1 className="font-display text-[clamp(3rem,8vw,6.5rem)] leading-[0.95] text-cream">

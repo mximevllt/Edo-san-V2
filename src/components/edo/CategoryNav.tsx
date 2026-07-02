@@ -1,15 +1,29 @@
 import { useEffect, useRef, useState } from "react";
-import { CATEGORIES } from "@/data/menu";
-import logo from "@/assets/edo-logo.png.asset.json";
+import { CATEGORIES, type Category } from "@/data/menu";
 import { ShoppingBag } from "lucide-react";
 import { useCart } from "@/lib/cart-context";
 
-export function CategoryNav({ onOpenCart }: { onOpenCart: () => void }) {
-  const [active, setActive] = useState(CATEGORIES[0].id);
+const logo = "/edo-assets/01-Logo-Edo-San-Sushi-blanc.png";
+
+export function CategoryNav({
+  onOpenCart,
+  categories = CATEGORIES,
+}: {
+  onOpenCart: () => void;
+  categories?: Category[];
+}) {
+  const [active, setActive] = useState(categories[0]?.id ?? "");
   const navRef = useRef<HTMLDivElement>(null);
   const { count } = useCart();
 
   useEffect(() => {
+    if (!categories.some((category) => category.id === active)) {
+      setActive(categories[0]?.id ?? "");
+    }
+  }, [active, categories]);
+
+  useEffect(() => {
+    if (categories.length === 0) return;
     const observer = new IntersectionObserver(
       (entries) => {
         const visible = entries
@@ -19,12 +33,12 @@ export function CategoryNav({ onOpenCart }: { onOpenCart: () => void }) {
       },
       { rootMargin: "-30% 0px -55% 0px", threshold: [0, 0.25, 0.5, 1] }
     );
-    CATEGORIES.forEach((c) => {
+    categories.forEach((c) => {
       const el = document.getElementById(c.id);
       if (el) observer.observe(el);
     });
     return () => observer.disconnect();
-  }, []);
+  }, [categories]);
 
   useEffect(() => {
     const container = navRef.current;
@@ -41,8 +55,8 @@ export function CategoryNav({ onOpenCart }: { onOpenCart: () => void }) {
   return (
     <div className="sticky top-0 z-40 h-[68px] w-full max-w-full border-b border-cream/10 bg-ink">
       <div className="mx-auto flex h-full w-full max-w-[1500px] items-center gap-3 px-4 lg:px-8">
-          <a href="#top" className="flex shrink-0 items-center gap-2">
-            <img src={logo.url} alt="Edo-San Sushi" className="h-9 w-9 object-contain" />
+          <a href="#top" aria-label="Edo-San Sushi" className="flex shrink-0 items-center gap-2">
+            <img src={logo} alt="" aria-hidden className="h-9 w-9 object-contain" />
             <span className="hidden font-display text-lg text-cream sm:inline">Edo-San</span>
           </a>
           <div className="relative min-w-0 flex-1">
@@ -50,7 +64,7 @@ export function CategoryNav({ onOpenCart }: { onOpenCart: () => void }) {
               ref={navRef}
               className="no-scrollbar fade-right-mask flex items-center gap-2 overflow-x-auto whitespace-nowrap scroll-smooth"
             >
-              {CATEGORIES.map((c) => {
+              {categories.map((c) => {
                 const isActive = active === c.id;
                 return (
                   <button

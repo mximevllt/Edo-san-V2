@@ -125,6 +125,27 @@
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { scrollbar-width: none; }
 
+  .admin-input {
+    width: 100%;
+    border-radius: 1rem;
+    border: 1px solid color-mix(in oklab, var(--cream) 14%, transparent);
+    background: var(--ink);
+    padding: 0.75rem 1rem;
+    color: var(--cream);
+    outline: none;
+    transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+  }
+  .admin-input::placeholder {
+    color: color-mix(in oklab, var(--cream) 45%, transparent);
+  }
+  .admin-input:focus {
+    border-color: var(--crimson);
+    box-shadow: 0 0 0 1px var(--crimson);
+  }
+  .admin-input[type="date"] {
+    color-scheme: dark;
+  }
+
   .fade-right-mask {
     -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent 100%);
     mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent 100%);
@@ -144,6 +165,73 @@
     80% { transform: translateX(1px); opacity: 1; }
   }
   .animate-pay-ready { animation: pay-ready 1.6s ease-in-out infinite; }
+
+  .auto-mix-cart-item {
+    position: relative;
+    border-color: #d0112b !important;
+    box-shadow: inset 0 0 0 1px #d0112b;
+  }
+
+  @keyframes auto-sushi-spin {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.06); }
+    100% { transform: rotate(360deg) scale(1); }
+  }
+  @keyframes auto-spark {
+    0%, 100% { opacity: 0.15; transform: scale(0.5); }
+    45% { opacity: 1; transform: scale(1); }
+  }
+  .auto-sushi-icon {
+    position: relative;
+    display: grid;
+    height: 74px;
+    width: 74px;
+    place-items: center;
+    border-radius: 999px;
+    background: var(--cream);
+    box-shadow: 0 12px 36px -12px color-mix(in oklab, var(--crimson) 80%, transparent);
+    animation: auto-sushi-spin 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+  .auto-sushi-icon::before {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border: 8px solid #161616;
+    border-radius: 999px;
+  }
+  .auto-sushi-icon::after {
+    content: "";
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    border-radius: 999px;
+    background: #d0112b;
+    box-shadow:
+      18px 6px 0 #f4a23d,
+      -13px 12px 0 #00cf51,
+      4px -17px 0 #f5a3aa;
+  }
+  .auto-sushi-icon span {
+    position: absolute;
+    height: 42px;
+    width: 10px;
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--cream) 78%, #fff);
+    transform: rotate(38deg);
+    opacity: 0.85;
+  }
+  .auto-spark {
+    position: absolute;
+    height: 9px;
+    width: 9px;
+    border-radius: 2px;
+    background: #d0112b;
+    transform: rotate(45deg);
+    animation: auto-spark 1.05s ease-in-out infinite;
+  }
+  .auto-spark-1 { left: 6px; top: 28px; }
+  .auto-spark-2 { right: 7px; top: 14px; animation-delay: 0.22s; }
+  .auto-spark-3 { bottom: 12px; right: 22px; animation-delay: 0.45s; }
 }
 
 @layer utilities {
