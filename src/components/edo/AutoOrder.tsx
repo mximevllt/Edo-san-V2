@@ -74,7 +74,8 @@ export function AutoOrder({
   const [people, setPeople] = useState<PersonPreference[]>([defaultPerson(), defaultPerson()]);
   const [activePerson, setActivePerson] = useState(0);
   const [collective, setCollective] = useState(() => defaultCollective(2));
-  const [budgetSlider, setBudgetSlider] = useState(58);
+  const [budgetSlider, setBudgetSlider] = useState(0);
+  const [budgetTouched, setBudgetTouched] = useState(false);
 
   useEffect(() => {
     setPeople((prev) =>
@@ -98,6 +99,22 @@ export function AutoOrder({
   }, [mode, peopleCount, budget, people, collective]);
 
   const recommendation = useMemo(() => getRecommendedBudget(input), [input]);
+
+  useEffect(() => {
+    if (budgetTouched || (stage !== "budget" && stage !== "collective")) return;
+    const defaultBudget = Math.round((recommendation.min + recommendation.max) / 2);
+    setBudgetSlider(sliderFromBudget(defaultBudget));
+  }, [budgetTouched, recommendation.max, recommendation.min, stage]);
+
+  const updateBudgetSlider = (next: number) => {
+    setBudgetTouched(true);
+    setBudgetSlider(next);
+  };
+
+  const raiseBudgetToMinimum = () => {
+    setBudgetTouched(true);
+    setBudgetSlider(sliderFromBudget(recommendation.min));
+  };
 
   function launch(fillRemaining = false) {
     setStage("loading");
@@ -235,8 +252,8 @@ export function AutoOrder({
                     budget={budget}
                     slider={budgetSlider}
                     recommendation={recommendation}
-                    onSliderChange={setBudgetSlider}
-                    onRaiseBudget={() => setBudgetSlider(sliderFromBudget(recommendation.min))}
+                    onSliderChange={updateBudgetSlider}
+                    onRaiseBudget={raiseBudgetToMinimum}
                   />
                   <PrimaryButton onClick={() => launch(false)} launch>
                     <span className="hidden min-[430px]:inline">Lancer l'auto-mix</span>
@@ -280,8 +297,8 @@ export function AutoOrder({
                     budget={budget}
                     slider={budgetSlider}
                     recommendation={recommendation}
-                    onSliderChange={setBudgetSlider}
-                    onRaiseBudget={() => setBudgetSlider(sliderFromBudget(recommendation.min))}
+                    onSliderChange={updateBudgetSlider}
+                    onRaiseBudget={raiseBudgetToMinimum}
                   />
                   <PrimaryButton onClick={() => launch(false)} launch>
                     <span className="hidden min-[430px]:inline">Lancer l'auto-mix</span>
