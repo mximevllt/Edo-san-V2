@@ -21,6 +21,33 @@ Aucune des trois étapes ne casse les autres : la détection `VERCEL=1` n'affect
 - **Publiques** (exposées au navigateur) : préfixe `VITE_`, lues via `import.meta.env.VITE_*`. À déclarer dans Vercel → Project Settings → Environment Variables.
 - **Secrètes** (server-only) : pas de préfixe, lues via `process.env.X` **uniquement à l'intérieur** d'un `.handler()` de `createServerFn` ou d'un server route. Ne jamais les lire au top-level d'un module.
 
+### Paiement Stripe
+
+Le paiement utilise Stripe avec un `PaymentIntent` créé côté serveur. Deux variables sont obligatoires :
+
+- `STRIPE_SECRET_KEY` : clé secrète Stripe, server-only. Ne jamais l'exposer côté navigateur.
+- `VITE_STRIPE_PUBLISHABLE_KEY` : clé publique Stripe, utilisée par le formulaire de paiement côté client.
+
+Pour les tests, utiliser les clés sandbox :
+
+- `STRIPE_SECRET_KEY=sk_test_...`
+- `VITE_STRIPE_PUBLISHABLE_KEY=pk_test_...`
+
+Pour la production, utiliser les clés live :
+
+- `STRIPE_SECRET_KEY=sk_live_...`
+- `VITE_STRIPE_PUBLISHABLE_KEY=pk_live_...`
+
+Dans Vercel :
+
+1. Ouvrir le projet.
+2. Aller dans `Settings` → `Environment Variables`.
+3. Ajouter `STRIPE_SECRET_KEY` pour `Production`, `Preview` et `Development` selon le besoin.
+4. Ajouter `VITE_STRIPE_PUBLISHABLE_KEY` pour les mêmes environnements.
+5. Redéployer le site après ajout ou modification des variables.
+
+Dans Stripe, les moyens de paiement souhaités doivent aussi être activés dans le Dashboard : carte bancaire, Apple Pay, Google Pay et PayPal selon disponibilité du compte.
+
 ## Server functions
 
 Les `createServerFn` deviennent automatiquement des fonctions serverless Vercel — aucune réorganisation manuelle dans un dossier `/api` n'est nécessaire. Pour des endpoints HTTP bruts (webhooks, etc.), utiliser un server route dans `src/routes/api/`.
