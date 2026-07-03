@@ -32,8 +32,6 @@ const ingredientLabels: Record<StarIngredient, string> = {
   daurade: "Daurade",
 };
 
-const DEFAULT_INCLUDED_CATEGORIES = AUTO_CATEGORY_OPTIONS.map((category) => category.id);
-
 type Stage = "people" | "mode" | "intro" | "person" | "budget" | "collective" | "loading";
 
 function defaultPerson(): PersonPreference {
@@ -43,7 +41,7 @@ function defaultPerson(): PersonPreference {
     appetite: 3,
     preferredIngredients: [],
     excludedIngredients: [],
-    includedCategories: [...DEFAULT_INCLUDED_CATEGORIES],
+    includedCategories: [],
     wantsDessert: false,
   };
 }
@@ -55,7 +53,7 @@ function defaultCollective(peopleCount: number): CollectivePreference {
     appetite: 3,
     preferredIngredients: [],
     excludedIngredients: [],
-    includedCategories: [...DEFAULT_INCLUDED_CATEGORIES],
+    includedCategories: [],
     wantsDessert: false,
   };
 }
@@ -624,6 +622,11 @@ function CategoryPicker({ value, onChange }: { value: AutoCategory[]; onChange: 
           {category.label}
         </Chip>
       ))}
+      {value.length === 0 && (
+        <p className="basis-full pt-1 text-xs leading-relaxed text-muted-foreground">
+          Cochez au moins une catégorie pour indiquer ce que l'Auto-mix peut mettre dans le panier.
+        </p>
+      )}
     </ChipGroup>
   );
 }
