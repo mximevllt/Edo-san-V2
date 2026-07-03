@@ -1,20 +1,23 @@
 import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowLeft, CalendarDays, CheckCircle2, Clock, CreditCard, Lock, ShieldCheck, Smartphone, Wallet } from "lucide-react";
+import { Elements, ExpressCheckoutElement, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import { ArrowLeft, CalendarDays, Clock, Lock, ShieldCheck } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
-import { formatPrice, useCart } from "@/lib/cart-context";
+import { formatPrice, useCart, type CartEntry } from "@/lib/cart-context";
+import { createPaymentIntent } from "@/lib/api/payments.functions";
 
 type Slot = "midi-today" | "soir-today" | "midi-tomorrow" | "soir-tomorrow" | "later";
 type CheckoutStep = "details" | "payment";
-type PaymentMethod = "apple-pay" | "google-pay" | "paypal" | "card";
 
 type Billing = { name: string; email: string; phone: string };
 type Address = { number: string; street: string; city: string };
-type CardDetails = { number: string; expiry: string; cvc: string; name: string };
 
 const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const phoneRe = /^[+0-9 .()-]{8,}$/;
+const stripePublishableKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
+const stripePromise = stripePublishableKey ? loadStripe(stripePublishableKey) : null;
 
 function buildTimes() {
   const out: string[] = [];
@@ -51,14 +54,13 @@ function formatDate(d: Date) {
 }
 
 export function Checkout({ onBack }: { onBack: () => void }) {
-  const { total } = useCart();
+  const { items, total } = useCart();
   const deliveryFee = 3.5;
   const grandTotal = total + deliveryFee;
   const [step, setStep] = useState<CheckoutStep>("details");
   const [billing, setBilling] = useState<Billing>({ name: "", email: "", phone: "" });
   const [address, setAddress] = useState<Address>({ number: "", street: "", city: "" });
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("card");
-  const [card, setCard] = useState<CardDetails>({ number: "", expiry: "", cvc: "", name: "" });
+  const [paymentReady, setPaymentReady] = useState(false);
 
   const [selectedSlot, setSelectedSlot] = useState<Slot | null>(null);
   const [pickedDate, setPickedDate] = useState<Date | undefined>(undefined);
@@ -112,12 +114,6 @@ export function Checkout({ onBack }: { onBack: () => void }) {
     address.number.trim().length > 0 && address.street.trim().length >= 2 && address.city.trim().length >= 2;
   const scheduleOk = !!pickedDate && !!pickedTime;
   const formOk = billingOk && addressOk && scheduleOk;
-  const cardOk =
-    card.number.replace(/\D/g, "").length >= 15 &&
-    /^\d{2}\/\d{2}$/.test(card.expiry.trim()) &&
-    card.cvc.replace(/\D/g, "").length >= 3 &&
-    card.name.trim().length >= 2;
-  const paymentOk = paymentMethod === "card" ? cardOk : true;
 
   // Auto-scroll the time list into view when it appears
   const [timeListMounted, setTimeListMounted] = useState(false);
@@ -128,6 +124,10 @@ export function Checkout({ onBack }: { onBack: () => void }) {
   useEffect(() => {
     if (!formOk && step === "payment") setStep("details");
   }, [formOk, step]);
+
+  useEffect(() => {
+    if (step !== "payment") setPaymentReady(false);
+  }, [step]);
 
   const backLabel = step === "payment" ? "Commande" : "Panier";
   const handleBack = () => {
@@ -332,6 +332,7 @@ export function Checkout({ onBack }: { onBack: () => void }) {
         ) : (
           <PaymentStep
             key="payment"
+            items={items}
             billing={billing}
             address={address}
             pickedDate={pickedDate}
@@ -339,11 +340,7 @@ export function Checkout({ onBack }: { onBack: () => void }) {
             total={total}
             deliveryFee={deliveryFee}
             grandTotal={grandTotal}
-            paymentMethod={paymentMethod}
-            onMethodChange={setPaymentMethod}
-            card={card}
-            onCardChange={setCard}
-            paymentOk={paymentOk}
+            onReadyChange={setPaymentReady}
           />
         )}
       </AnimatePresence>
@@ -368,11 +365,13 @@ export function Checkout({ onBack }: { onBack: () => void }) {
       ) : (
         <div className="border-t border-cream/10 bg-ink px-6 py-5">
           <motion.button
-            whileTap={paymentOk ? { scale: 0.98 } : undefined}
-            disabled={!paymentOk}
+            type="submit"
+            form="stripe-payment-form"
+            whileTap={paymentReady ? { scale: 0.98 } : undefined}
+            disabled={!paymentReady}
             className={cn(
               "flex w-full items-center justify-center gap-2 rounded-2xl py-4 font-subtitle text-base uppercase tracking-wider transition",
-              paymentOk
+              paymentReady
                 ? "bg-crimson text-crimson-foreground crimson-glow animate-pay-ready"
                 : "cursor-not-allowed bg-[#2a2a2a] text-muted-foreground",
             )}
@@ -390,6 +389,7 @@ export function Checkout({ onBack }: { onBack: () => void }) {
 }
 
 function PaymentStep({
+  items,
   billing,
   address,
   pickedDate,
@@ -397,12 +397,9 @@ function PaymentStep({
   total,
   deliveryFee,
   grandTotal,
-  paymentMethod,
-  onMethodChange,
-  card,
-  onCardChange,
-  paymentOk,
+  onReadyChange,
 }: {
+  items: CartEntry[];
   billing: Billing;
   address: Address;
   pickedDate: Date | undefined;
@@ -410,12 +407,71 @@ function PaymentStep({
   total: number;
   deliveryFee: number;
   grandTotal: number;
-  paymentMethod: PaymentMethod;
-  onMethodChange: (method: PaymentMethod) => void;
-  card: CardDetails;
-  onCardChange: (card: CardDetails) => void;
-  paymentOk: boolean;
+  onReadyChange: (ready: boolean) => void;
 }) {
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const [serverAmount, setServerAmount] = useState<number | null>(null);
+  const [paymentError, setPaymentError] = useState<string | null>(null);
+  const [loadingIntent, setLoadingIntent] = useState(true);
+  const publishableKeyMissing = !stripePromise;
+
+  useEffect(() => {
+    let cancelled = false;
+    onReadyChange(false);
+    setClientSecret(null);
+    setServerAmount(null);
+    setPaymentError(null);
+
+    if (publishableKeyMissing) {
+      setLoadingIntent(false);
+      setPaymentError("La clé publique Stripe n'est pas configurée.");
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    if (!pickedDate || !pickedTime) {
+      setLoadingIntent(false);
+      setPaymentError("Le créneau de livraison est incomplet.");
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    setLoadingIntent(true);
+    createPaymentIntent({
+      data: {
+        lines: items.map((item) => ({
+          productId: item.product.id,
+          quantity: item.quantity,
+        })),
+        customer: billing,
+        delivery: {
+          ...address,
+          date: pickedDate.toISOString(),
+          time: pickedTime,
+        },
+      },
+    })
+      .then((result) => {
+        if (cancelled) return;
+        setClientSecret(result.clientSecret);
+        setServerAmount(result.amount);
+        setPaymentError(null);
+      })
+      .catch((error) => {
+        if (cancelled) return;
+        setPaymentError(error instanceof Error ? error.message : "Impossible de préparer le paiement Stripe.");
+      })
+      .finally(() => {
+        if (!cancelled) setLoadingIntent(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [address, billing, items, onReadyChange, pickedDate, pickedTime, publishableKeyMissing]);
+
   return (
     <motion.div
       key="payment"
@@ -449,162 +505,143 @@ function PaymentStep({
           </div>
           <div className="flex justify-between pt-2 font-display text-2xl text-cream">
             <span>Total</span>
-            <span>{formatPrice(grandTotal)}</span>
+            <span>{formatPrice(serverAmount != null ? serverAmount / 100 : grandTotal)}</span>
           </div>
         </div>
       </section>
 
       <section className="mt-6">
         <h3 className="font-subtitle text-xs uppercase tracking-[0.22em] text-muted-foreground">
-          Moyen de paiement
+          Paiement sécurisé Stripe
         </h3>
-        <div className="mt-3 grid grid-cols-2 gap-3">
-          <PaymentMethodButton
-            method="apple-pay"
-            active={paymentMethod === "apple-pay"}
-            title="Apple Pay"
-            icon={<Smartphone className="h-4 w-4" />}
-            onClick={onMethodChange}
-          />
-          <PaymentMethodButton
-            method="google-pay"
-            active={paymentMethod === "google-pay"}
-            title="Google Pay"
-            icon={<Wallet className="h-4 w-4" />}
-            onClick={onMethodChange}
-          />
-          <PaymentMethodButton
-            method="paypal"
-            active={paymentMethod === "paypal"}
-            title="PayPal"
-            icon={<Wallet className="h-4 w-4" />}
-            onClick={onMethodChange}
-          />
-          <PaymentMethodButton
-            method="card"
-            active={paymentMethod === "card"}
-            title="Carte bancaire"
-            icon={<CreditCard className="h-4 w-4" />}
-            onClick={onMethodChange}
-          />
-        </div>
+        <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+          Carte bancaire, Apple Pay, Google Pay et PayPal sont affichés par Stripe selon le navigateur, l'appareil et les moyens activés dans votre compte Stripe.
+        </p>
       </section>
 
-      <AnimatePresence mode="wait" initial={false}>
-        {paymentMethod === "card" ? (
-          <motion.section
-            key="card"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.18 }}
-            className="mt-5 rounded-2xl border border-cream/10 bg-ink p-4"
-          >
-            <div className="mb-4 flex items-center justify-between">
-              <p className="font-subtitle text-xs uppercase tracking-[0.22em] text-muted-foreground">Carte bancaire</p>
-              <div className="flex items-center gap-1 text-[11px] text-muted-foreground">
-                <Lock className="h-3.5 w-3.5" />
-                Sécurisé
-              </div>
-            </div>
-            <div className="space-y-3">
-              <Field
-                label="Numéro de carte"
-                inputMode="numeric"
-                placeholder="4242 4242 4242 4242"
-                value={card.number}
-                onChange={(number) => onCardChange({ ...card, number })}
-              />
-              <div className="grid grid-cols-2 gap-3">
-                <Field
-                  label="Expiration"
-                  inputMode="numeric"
-                  placeholder="MM/AA"
-                  value={card.expiry}
-                  onChange={(expiry) => onCardChange({ ...card, expiry })}
-                />
-                <Field
-                  label="CVC"
-                  inputMode="numeric"
-                  placeholder="123"
-                  value={card.cvc}
-                  onChange={(cvc) => onCardChange({ ...card, cvc })}
-                />
-              </div>
-              <Field
-                label="Nom sur la carte"
-                placeholder="Juste Leblanc"
-                value={card.name}
-                onChange={(name) => onCardChange({ ...card, name })}
-              />
-            </div>
-          </motion.section>
-        ) : (
-          <motion.section
-            key={paymentMethod}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.18 }}
-            className="mt-5 rounded-2xl border border-cream/10 bg-ink p-4"
-          >
-            <div className="flex items-start gap-3">
-              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-crimson" />
-              <div>
-                <p className="text-sm font-semibold text-cream">{paymentLabel(paymentMethod)} sélectionné</p>
-                <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-                  En production, ce bouton ouvrira la fenêtre sécurisée du service choisi pour confirmer le paiement.
-                </p>
-              </div>
-            </div>
-          </motion.section>
-        )}
-      </AnimatePresence>
+      {loadingIntent && (
+        <div className="mt-5 rounded-2xl border border-cream/10 bg-ink p-4 text-sm text-muted-foreground">
+          Préparation du paiement sécurisé...
+        </div>
+      )}
 
-      {!paymentOk && (
-        <p className="mt-3 rounded-2xl border border-[#f4a23d]/35 bg-[#f4a23d]/10 px-4 py-3 text-xs leading-relaxed text-[#f4a23d]/80">
-          Complétez les informations de carte pour activer le paiement.
-        </p>
+      {paymentError && (
+        <div className="mt-5 rounded-2xl border border-[#f4a23d]/35 bg-[#f4a23d]/10 px-4 py-3 text-xs leading-relaxed text-[#f4a23d]/80">
+          {paymentError}
+          <br />
+          Ajoutez `STRIPE_SECRET_KEY` et `VITE_STRIPE_PUBLISHABLE_KEY` dans Vercel pour activer l'encaissement réel.
+        </div>
+      )}
+
+      {clientSecret && stripePromise && (
+        <Elements
+          stripe={stripePromise}
+          options={{
+            clientSecret,
+            appearance: {
+              theme: "night",
+              variables: {
+                colorPrimary: "#e43b4f",
+                colorBackground: "#111111",
+                colorText: "#f8f1df",
+                colorDanger: "#f4a23d",
+                borderRadius: "12px",
+                fontFamily: "Inter, system-ui, sans-serif",
+              },
+            },
+          }}
+        >
+          <StripePaymentForm billing={billing} onReadyChange={onReadyChange} />
+        </Elements>
       )}
     </motion.div>
   );
 }
 
-function PaymentMethodButton({
-  method,
-  active,
-  title,
-  icon,
-  onClick,
+function StripePaymentForm({
+  billing,
+  onReadyChange,
 }: {
-  method: PaymentMethod;
-  active: boolean;
-  title: string;
-  icon: React.ReactNode;
-  onClick: (method: PaymentMethod) => void;
+  billing: Billing;
+  onReadyChange: (ready: boolean) => void;
 }) {
-  return (
-    <button
-      type="button"
-      onClick={() => onClick(method)}
-      className={cn(
-        "flex min-h-20 flex-col items-center justify-center gap-2 rounded-2xl border px-3 py-4 text-center transition",
-        active ? "border-crimson bg-crimson/10 text-cream" : "border-cream/15 bg-ink text-muted-foreground hover:border-cream/35 hover:text-cream",
-      )}
-    >
-      <span className={cn("grid h-9 w-9 place-items-center rounded-full", active ? "bg-crimson text-crimson-foreground" : "bg-cream/10")}>
-        {icon}
-      </span>
-      <span className="text-xs font-semibold">{title}</span>
-    </button>
-  );
-}
+  const stripe = useStripe();
+  const elements = useElements();
+  const [submitting, setSubmitting] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
 
-function paymentLabel(method: PaymentMethod) {
-  if (method === "apple-pay") return "Apple Pay";
-  if (method === "google-pay") return "Google Pay";
-  if (method === "paypal") return "PayPal";
-  return "Carte bancaire";
+  useEffect(() => {
+    onReadyChange(Boolean(stripe && elements) && !submitting);
+  }, [elements, onReadyChange, stripe, submitting]);
+
+  async function confirmStripePayment() {
+    if (!stripe || !elements) return;
+
+    setSubmitting(true);
+    setMessage(null);
+    onReadyChange(false);
+
+    const { error, paymentIntent } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: `${window.location.origin}/`,
+        payment_method_data: {
+          billing_details: {
+            name: billing.name,
+            email: billing.email,
+            phone: billing.phone,
+          },
+        },
+      },
+      redirect: "if_required",
+    });
+
+    if (error) {
+      setMessage(error.message ?? "Le paiement n'a pas pu aboutir.");
+      setSubmitting(false);
+      onReadyChange(true);
+      return;
+    }
+
+    if (paymentIntent?.status === "succeeded") {
+      setMessage("Paiement validé. Merci, votre commande est confirmée.");
+    } else {
+      setMessage("Paiement en cours de confirmation.");
+    }
+    setSubmitting(false);
+  }
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    await confirmStripePayment();
+  }
+
+  return (
+    <form id="stripe-payment-form" onSubmit={handleSubmit} className="mt-5 space-y-4">
+      <div className="rounded-2xl border border-cream/10 bg-ink p-4">
+        <p className="mb-3 font-subtitle text-xs uppercase tracking-[0.22em] text-muted-foreground">
+          Paiement express
+        </p>
+        <ExpressCheckoutElement onConfirm={confirmStripePayment} />
+      </div>
+      <div className="rounded-2xl border border-cream/10 bg-ink p-4">
+        <p className="mb-3 font-subtitle text-xs uppercase tracking-[0.22em] text-muted-foreground">
+          Carte, PayPal et autres moyens disponibles
+        </p>
+        <PaymentElement options={{ layout: { type: "accordion", defaultCollapsed: false, radios: "always" } }} />
+      </div>
+      {message && (
+        <p className="rounded-2xl border border-cream/10 bg-ink px-4 py-3 text-xs leading-relaxed text-muted-foreground">
+          {message}
+        </p>
+      )}
+      {submitting && (
+        <p className="text-center text-xs text-muted-foreground">
+          Validation du paiement en cours...
+        </p>
+      )}
+    </form>
+  );
 }
 
 function Field({
