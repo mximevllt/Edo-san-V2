@@ -16,7 +16,7 @@ const initialForm = {
 };
 
 export function CustomerAccess({ className }: { className?: string }) {
-  const { customer, loading, signIn, signUp, signOut } = useCustomerAuth();
+  const { user, customer, loading, signIn, signUp, signOut } = useCustomerAuth();
   const [mode, setMode] = useState<Mode>("login");
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState(initialForm);
@@ -24,26 +24,46 @@ export function CustomerAccess({ className }: { className?: string }) {
   const [submitting, setSubmitting] = useState(false);
   const [pendingFirstName, setPendingFirstName] = useState<string | null>(null);
 
-  const firstName = customer?.firstName?.trim() || pendingFirstName;
+  const userFirstName =
+    typeof user?.user_metadata?.first_name === "string"
+      ? user.user_metadata.first_name.trim()
+      : user?.email?.split("@")[0];
+  const firstName = customer?.firstName?.trim() || userFirstName || pendingFirstName;
+
+  function readSubmittedForm(target: HTMLFormElement) {
+    const submitted = new FormData(target);
+    return {
+      firstName: String(submitted.get("firstName") ?? form.firstName).trim(),
+      lastName: String(submitted.get("lastName") ?? form.lastName).trim(),
+      phone: String(submitted.get("phone") ?? form.phone).trim(),
+      email: String(submitted.get("email") ?? form.email).trim(),
+      password: String(submitted.get("password") ?? form.password),
+      address: String(submitted.get("address") ?? form.address).trim(),
+    };
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const submitted = readSubmittedForm(event.currentTarget);
     setSubmitting(true);
     setMessage(null);
 
     try {
       if (mode === "login") {
-        await signIn({ email: form.email, password: form.password });
+        if (!submitted.email || !submitted.password) {
+          throw new Error("Veuillez renseigner votre e-mail et votre mot de passe.");
+        }
+        await signIn({ email: submitted.email, password: submitted.password });
         setPendingFirstName(null);
         setOpen(false);
       } else {
         const result = await signUp({
-          firstName: form.firstName,
-          lastName: form.lastName,
-          phone: form.phone,
-          email: form.email,
-          password: form.password,
-          address: form.address,
+          firstName: submitted.firstName,
+          lastName: submitted.lastName,
+          phone: submitted.phone,
+          email: submitted.email,
+          password: submitted.password,
+          address: submitted.address,
         });
         setPendingFirstName(result.firstName);
         setForm(initialForm);
@@ -54,6 +74,11 @@ export function CustomerAccess({ className }: { className?: string }) {
     } finally {
       setSubmitting(false);
     }
+  }
+
+  async function handleSignOut() {
+    setPendingFirstName(null);
+    await signOut();
   }
 
   if (loading) {
@@ -67,10 +92,10 @@ export function CustomerAccess({ className }: { className?: string }) {
           <UserRound className="h-4 w-4 text-crimson" />
           Bonjour {firstName} !
         </div>
-        {customer ? (
+        {customer || user ? (
           <button
             type="button"
-            onClick={signOut}
+            onClick={handleSignOut}
             className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground transition hover:text-cream"
           >
             <LogOut className="h-3.5 w-3.5" />
@@ -152,15 +177,15 @@ export function CustomerAccess({ className }: { className?: string }) {
                 {mode === "signup" && (
                   <>
                     <div className="grid grid-cols-2 gap-3">
-                      <AuthField label="Prénom" value={form.firstName} onChange={(value) => setForm({ ...form, firstName: value })} />
-                      <AuthField label="Nom" value={form.lastName} onChange={(value) => setForm({ ...form, lastName: value })} />
+                      <AuthField name="firstName" label="Prénom" value={form.firstName} onChange={(value) => setForm({ ...form, firstName: value })} />
+                      <AuthField name="lastName" label="Nom" value={form.lastName} onChange={(value) => setForm({ ...form, lastName: value })} />
                     </div>
-                    <AuthField label="Téléphone" value={form.phone} onChange={(value) => setForm({ ...form, phone: value })} />
-                    <AuthField label="Adresse" value={form.address} onChange={(value) => setForm({ ...form, address: value })} />
+                    <AuthField name="phone" label="Téléphone" value={form.phone} onChange={(value) => setForm({ ...form, phone: value })} />
+                    <AuthField name="address" label="Adresse" value={form.address} onChange={(value) => setForm({ ...form, address: value })} />
                   </>
                 )}
-                <AuthField label="E-mail" type="email" value={form.email} onChange={(value) => setForm({ ...form, email: value })} />
-                <AuthField label="Mot de passe" type="password" value={form.password} onChange={(value) => setForm({ ...form, password: value })} />
+                <AuthField name="email" label="E-mail" type="email" value={form.email} onChange={(value) => setForm({ ...form, email: value })} />
+                <AuthField name="password" label="Mot de passe" type="password" value={form.password} onChange={(value) => setForm({ ...form, password: value })} />
               </div>
 
               {message && (
@@ -198,11 +223,13 @@ export function CustomerAccess({ className }: { className?: string }) {
 }
 
 function AuthField({
+  name,
   label,
   value,
   onChange,
   type = "text",
 }: {
+  name: string;
   label: string;
   value: string;
   onChange: (value: string) => void;
@@ -213,8 +240,11 @@ function AuthField({
       <span className="mb-1 block text-[11px] uppercase tracking-[0.18em] text-muted-foreground">{label}</span>
       <input
         required
+        name={name}
         type={type}
+        autoComplete={type === "password" ? "current-password" : name === "email" ? "email" : name}
         value={value}
+        onInput={(event) => onChange(event.currentTarget.value)}
         onChange={(event) => onChange(event.target.value)}
         className="w-full rounded-lg border border-cream/15 bg-ink px-3 py-2.5 text-sm text-cream placeholder:text-muted-foreground/60 focus:border-crimson focus:outline-none focus:ring-1 focus:ring-crimson"
       />
