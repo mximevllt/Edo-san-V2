@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import hero from "@/assets/hero-sushi.jpg";
+import { CustomerAccess } from "@/components/edo/CustomerAccess";
 
 const logo = "/edo-assets/01-Logo-Edo-San-Sushi-blanc.png";
 
@@ -7,6 +8,7 @@ export function Hero() {
   return (
     <section id="top" className="relative overflow-hidden border-b border-cream/10">
       <div className="hero-glow pointer-events-none absolute inset-0" />
+      <CustomerAccess className="absolute right-4 top-24 z-20 hidden lg:flex lg:right-8 lg:top-36" />
       <div className="relative mx-auto grid max-w-[1500px] gap-10 px-4 py-16 md:py-24 lg:grid-cols-2 lg:gap-12 lg:px-8 lg:py-28">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -24,6 +26,7 @@ export function Hero() {
             <span className="text-crimson">Sushi</span>
           </h1>
           <p className="mt-6 max-w-md text-lg text-muted-foreground">Sushis frais et artisanaux</p>
+          <CustomerAccess className="mt-7 flex lg:hidden" />
           <div className="mt-8 flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-crimson animate-crimson-pulse" />

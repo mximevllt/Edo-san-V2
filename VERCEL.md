@@ -48,6 +48,18 @@ Dans Vercel :
 
 Dans Stripe, les moyens de paiement souhaités doivent aussi être activés dans le Dashboard : carte bancaire, Apple Pay, Google Pay et PayPal selon disponibilité du compte.
 
+### Supabase
+
+Le compte client et la base back-office clients utilisent Supabase.
+
+Variables à ajouter dans Vercel :
+
+- `VITE_SUPABASE_URL` : URL du projet Supabase.
+- `VITE_SUPABASE_ANON_KEY` : clé publique/publishable Supabase.
+- `SUPABASE_SERVICE_ROLE_KEY` : clé secrète Supabase, server-only.
+
+La clé `SUPABASE_SERVICE_ROLE_KEY` ne doit jamais avoir de préfixe `VITE_`, car elle ne doit jamais partir dans le navigateur.
+
 ## Server functions
 
 Les `createServerFn` deviennent automatiquement des fonctions serverless Vercel — aucune réorganisation manuelle dans un dossier `/api` n'est nécessaire. Pour des endpoints HTTP bruts (webhooks, etc.), utiliser un server route dans `src/routes/api/`.

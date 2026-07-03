@@ -7,6 +7,9 @@ import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 import { formatPrice, useCart, type CartEntry } from "@/lib/cart-context";
 import { createPaymentIntent } from "@/lib/api/payments.functions";
+import { recordCustomerOrder } from "@/lib/api/customers.functions";
+import { supabase } from "@/lib/supabase/client";
+import { useCustomerAuth } from "@/lib/supabase/auth-context";
 
 type Slot = "midi-today" | "soir-today" | "midi-tomorrow" | "soir-tomorrow" | "later";
 type CheckoutStep = "details" | "payment";
@@ -54,7 +57,8 @@ function formatDate(d: Date) {
 }
 
 export function Checkout({ onBack }: { onBack: () => void }) {
-  const { items, total } = useCart();
+  const { items, total, clear } = useCart();
+  const { customer, user } = useCustomerAuth();
   const deliveryFee = 3.5;
   const grandTotal = total + deliveryFee;
   const [step, setStep] = useState<CheckoutStep>("details");
@@ -128,6 +132,21 @@ export function Checkout({ onBack }: { onBack: () => void }) {
   useEffect(() => {
     if (step !== "payment") setPaymentReady(false);
   }, [step]);
+
+  useEffect(() => {
+    if (!customer) return;
+    setBilling((current) => ({
+      name: current.name || `${customer.firstName} ${customer.lastName}`.trim(),
+      email: current.email || customer.email,
+      phone: current.phone || customer.phone,
+    }));
+    if (customer.defaultAddress) {
+      setAddress((current) => {
+        if (current.number || current.street || current.city) return current;
+        return { number: "", street: customer.defaultAddress, city: "" };
+      });
+    }
+  }, [customer]);
 
   const backLabel = step === "payment" ? "Commande" : "Panier";
   const handleBack = () => {
@@ -340,7 +359,9 @@ export function Checkout({ onBack }: { onBack: () => void }) {
             total={total}
             deliveryFee={deliveryFee}
             grandTotal={grandTotal}
+            customerAuthUserId={user?.id ?? null}
             onReadyChange={setPaymentReady}
+            onPaid={clear}
           />
         )}
       </AnimatePresence>
@@ -397,7 +418,9 @@ function PaymentStep({
   total,
   deliveryFee,
   grandTotal,
+  customerAuthUserId,
   onReadyChange,
+  onPaid,
 }: {
   items: CartEntry[];
   billing: Billing;
@@ -407,7 +430,9 @@ function PaymentStep({
   total: number;
   deliveryFee: number;
   grandTotal: number;
+  customerAuthUserId: string | null;
   onReadyChange: (ready: boolean) => void;
+  onPaid: () => void;
 }) {
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [serverAmount, setServerAmount] = useState<number | null>(null);
@@ -551,7 +576,17 @@ function PaymentStep({
             },
           }}
         >
-          <StripePaymentForm billing={billing} onReadyChange={onReadyChange} />
+          <StripePaymentForm
+            items={items}
+            billing={billing}
+            address={address}
+            pickedDate={pickedDate}
+            pickedTime={pickedTime}
+            grandTotal={serverAmount != null ? serverAmount / 100 : grandTotal}
+            customerAuthUserId={customerAuthUserId}
+            onReadyChange={onReadyChange}
+            onPaid={onPaid}
+          />
         </Elements>
       )}
     </motion.div>
@@ -559,11 +594,25 @@ function PaymentStep({
 }
 
 function StripePaymentForm({
+  items,
   billing,
+  address,
+  pickedDate,
+  pickedTime,
+  grandTotal,
+  customerAuthUserId,
   onReadyChange,
+  onPaid,
 }: {
+  items: CartEntry[];
   billing: Billing;
+  address: Address;
+  pickedDate: Date | undefined;
+  pickedTime: string | null;
+  grandTotal: number;
+  customerAuthUserId: string | null;
   onReadyChange: (ready: boolean) => void;
+  onPaid: () => void;
 }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -605,6 +654,36 @@ function StripePaymentForm({
 
     if (paymentIntent?.status === "succeeded") {
       setMessage("Paiement validé. Merci, votre commande est confirmée.");
+      const { data: sessionData } = supabase ? await supabase.auth.getSession() : { data: { session: null } };
+      try {
+        await recordCustomerOrder({
+          data: {
+            accessToken: sessionData.session?.access_token,
+            paymentIntentId: paymentIntent.id,
+            customer: {
+              authUserId: customerAuthUserId,
+              firstName: billing.name.trim().split(/\s+/)[0] ?? "Client",
+              lastName: billing.name.trim().split(/\s+/).slice(1).join(" ") || "Edo-San",
+              phone: billing.phone,
+              email: billing.email,
+              defaultAddress: `${address.number} ${address.street}, ${address.city}`.trim(),
+            },
+            delivery: {
+              address: `${address.number} ${address.street}, ${address.city}`.trim(),
+              date: pickedDate ? pickedDate.toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10),
+              time: pickedTime ?? "",
+            },
+            lines: items.map((item) => ({
+              productId: item.product.id,
+              quantity: item.quantity,
+            })),
+            total: grandTotal,
+          },
+        });
+        onPaid();
+      } catch {
+        setMessage("Paiement validé. La commande est payée, mais l'enregistrement back-office devra être vérifié.");
+      }
     } else {
       setMessage("Paiement en cours de confirmation.");
     }

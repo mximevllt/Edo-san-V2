@@ -71,6 +71,8 @@ import {
   type StoreProduct,
   type StorePromotion,
 } from "@/lib/admin-store";
+import { listBackOfficeCustomers } from "@/lib/api/customers.functions";
+import type { BackOfficeCustomer } from "@/lib/supabase/types";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -122,17 +124,7 @@ type AdminOrder = {
   history: { status: OrderStatus; time: string }[];
 };
 
-type Client = {
-  name: string;
-  phone: string;
-  email: string;
-  orders: number;
-  spent: number;
-  average: number;
-  lastOrder: string;
-  address: string;
-  status: "VIP" | "Régulier" | "Nouveau" | "À surveiller";
-};
+type Client = BackOfficeCustomer;
 
 const sections: { id: SectionId; label: string; icon: LucideIcon }[] = [
   { id: "dashboard", label: "Tableau de bord", icon: LayoutDashboard },
@@ -274,7 +266,10 @@ const ordersSeed: AdminOrder[] = [
 
 const clientsSeed: Client[] = [
   {
+    id: "seed-justine",
     name: "Justine Martin",
+    firstName: "Justine",
+    lastName: "Martin",
     phone: "06 18 42 31 09",
     email: "justine.martin@email.com",
     orders: 18,
@@ -283,9 +278,13 @@ const clientsSeed: Client[] = [
     lastOrder: "Aujourd'hui",
     address: "18 rue Marceau, Le Val",
     status: "VIP",
+    topProducts: ["California Saumon Cheese", "Gyoza", "Poke Saumon"],
   },
   {
+    id: "seed-hugo",
     name: "Hugo Perrin",
+    firstName: "Hugo",
+    lastName: "Perrin",
     phone: "06 77 10 88 41",
     email: "hugo.perrin@email.com",
     orders: 9,
@@ -294,9 +293,13 @@ const clientsSeed: Client[] = [
     lastOrder: "Aujourd'hui",
     address: "Place de la mairie, Cotignac",
     status: "Régulier",
+    topProducts: ["Box Signature", "Oasis"],
   },
   {
+    id: "seed-nadia",
     name: "Nadia Rossi",
+    firstName: "Nadia",
+    lastName: "Rossi",
     phone: "06 44 23 90 11",
     email: "nadia.rossi@email.com",
     orders: 3,
@@ -305,9 +308,13 @@ const clientsSeed: Client[] = [
     lastOrder: "Hier",
     address: "Chemin des Prés, Le Val",
     status: "Nouveau",
+    topProducts: ["Maki Saumon Cheese", "Soupe miso", "Mochis Yuzu"],
   },
   {
+    id: "seed-marc",
     name: "Marc Vallon",
+    firstName: "Marc",
+    lastName: "Vallon",
     phone: "06 02 50 77 65",
     email: "marc.vallon@email.com",
     orders: 14,
@@ -316,6 +323,7 @@ const clientsSeed: Client[] = [
     lastOrder: "Lundi",
     address: "Rue des Aires, Montfort-sur-Argens",
     status: "VIP",
+    topProducts: ["Torei California", "Yakitori Poulet Caramel", "Poke Mixte"],
   },
 ];
 
@@ -354,6 +362,7 @@ function AdminPage() {
   const [selectedOrder, setSelectedOrder] = useState<AdminOrder | null>(null);
   const [editingProduct, setEditingProduct] = useState<AdminProduct | null>(null);
   const [selectedClient, setSelectedClient] = useState<Client | null>(null);
+  const [clients, setClients] = useState<Client[]>(clientsSeed);
   const [orderView, setOrderView] = useState<"table" | "kanban">("table");
   const [orderTab, setOrderTab] = useState<(typeof orderTabs)[number]>("En cours");
   const [deliveryTab, setDeliveryTab] = useState(deliveryTabs[0]);
@@ -400,6 +409,16 @@ function AdminPage() {
     const published = readPublishedAdminStore();
     setBaseline(published);
     resetDraft(published);
+  }, []);
+
+  useEffect(() => {
+    listBackOfficeCustomers({ data: undefined })
+      .then((rows) => {
+        if (rows.length > 0) setClients(rows);
+      })
+      .catch(() => {
+        setClients(clientsSeed);
+      });
   }, []);
 
   const confirmDraft = () => {
@@ -557,7 +576,7 @@ function AdminPage() {
               onToast={setToast}
             />
           )}
-          {activeSection === "clients" && <ClientsPage clients={clientsSeed} onOpenClient={setSelectedClient} />}
+          {activeSection === "clients" && <ClientsPage clients={clients} onOpenClient={setSelectedClient} />}
           {activeSection === "stats" && <StatsPage />}
           {activeSection === "hours" && (
             <HoursPage closure={closure} onChangeClosure={setClosureAndStore} hours={hours} onChangeHours={setHours} />
@@ -1563,7 +1582,7 @@ function ClientsPage({ clients, onOpenClient }: { clients: Client[]; onOpenClien
           </thead>
           <tbody>
             {clients.map((client) => (
-              <tr key={client.email} className="border-t border-cream/10">
+              <tr key={client.id} className="border-t border-cream/10">
                 <Td>
                   <button className="font-semibold text-cream hover:text-crimson" onClick={() => onOpenClient(client)}>{client.name}</button>
                 </Td>
@@ -1579,6 +1598,19 @@ function ClientsPage({ clients, onOpenClient }: { clients: Client[]; onOpenClien
                 </Td>
               </tr>
             ))}
+            {clients.length === 0 && (
+              <tr className="border-t border-cream/10">
+                <Td>Aucun client enregistré pour le moment.</Td>
+                <Td> </Td>
+                <Td> </Td>
+                <Td> </Td>
+                <Td> </Td>
+                <Td> </Td>
+                <Td> </Td>
+                <Td> </Td>
+                <Td> </Td>
+              </tr>
+            )}
           </tbody>
         </ResponsiveTable>
       </Panel>
@@ -2087,7 +2119,7 @@ function ClientDrawer({ client, onClose }: { client: Client | null; onClose: () 
           <InsightGrid items={[`${client.orders} commandes`, `${formatPrice(client.spent)} dépensés`, `${formatPrice(client.average)} panier moyen`, `Dernière commande : ${client.lastOrder}`]} />
         </Panel>
         <Panel title="Produits préférés">
-          <InsightGrid items={["California Saumon Cheese", "Gyoza", "Mochis Yuzu", "Poke Saumon"]} />
+          <InsightGrid items={client.topProducts.length > 0 ? client.topProducts : ["Aucun produit favori calculé"]} />
         </Panel>
         <Panel title="Notes internes">
           <TextArea label="Note" value="Client fidèle. Préfère livraison sans appel si paiement déjà effectué." onChange={() => undefined} />
