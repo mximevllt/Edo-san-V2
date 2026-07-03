@@ -9,8 +9,8 @@ type CustomerAuthContextValue = {
   customer: CustomerAccount | null;
   loading: boolean;
   error: string | null;
-  signIn: (payload: CustomerLogin) => Promise<void>;
-  signUp: (payload: CustomerRegistration) => Promise<void>;
+  signIn: (payload: CustomerLogin) => Promise<{ needsEmailConfirmation: false }>;
+  signUp: (payload: CustomerRegistration) => Promise<{ needsEmailConfirmation: boolean; firstName: string }>;
   signOut: () => Promise<void>;
   refreshCustomer: () => Promise<void>;
 };
@@ -87,6 +87,7 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
       setError(signInError.message);
       throw signInError;
     }
+    return { needsEmailConfirmation: false as const };
   }, []);
 
   const signUp = useCallback(async (payload: CustomerRegistration) => {
@@ -97,6 +98,7 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
       email: payload.email,
       password: payload.password,
       options: {
+        emailRedirectTo: `${window.location.origin}/`,
         data: {
           first_name: payload.firstName,
           last_name: payload.lastName,
@@ -129,6 +131,7 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
     }
 
     await refreshCustomer();
+    return { needsEmailConfirmation: !data.session, firstName: payload.firstName };
   }, [refreshCustomer]);
 
   const signOut = useCallback(async () => {

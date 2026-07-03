@@ -39,6 +39,29 @@ La migration crée :
 
 La migration ne crée aucune colonne bancaire et ne stocke aucune donnée de carte.
 
+## Corriger les liens d'e-mail de confirmation
+
+Dans Supabase, il faut remplacer le retour `localhost` par le vrai domaine Vercel.
+
+1. Ouvrir le projet Supabase.
+2. Aller dans `Authentication`.
+3. Cliquer sur `URL Configuration`.
+4. Dans `Site URL`, mettre l'URL publique du site Vercel, par exemple :
+
+```text
+https://ton-site.vercel.app
+```
+
+5. Dans `Redirect URLs`, ajouter aussi :
+
+```text
+https://ton-site.vercel.app/**
+```
+
+6. Cliquer sur `Save`.
+
+Si `Site URL` reste sur `http://localhost:3000`, les e-mails de confirmation enverront les clients vers une adresse locale inaccessible.
+
 ## Sécurité
 
 - RLS est activé sur les tables clients et commandes.

@@ -22,8 +22,9 @@ export function CustomerAccess({ className }: { className?: string }) {
   const [form, setForm] = useState(initialForm);
   const [message, setMessage] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [pendingFirstName, setPendingFirstName] = useState<string | null>(null);
 
-  const firstName = customer?.firstName?.trim();
+  const firstName = customer?.firstName?.trim() || pendingFirstName;
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -33,9 +34,10 @@ export function CustomerAccess({ className }: { className?: string }) {
     try {
       if (mode === "login") {
         await signIn({ email: form.email, password: form.password });
+        setPendingFirstName(null);
         setOpen(false);
       } else {
-        await signUp({
+        const result = await signUp({
           firstName: form.firstName,
           lastName: form.lastName,
           phone: form.phone,
@@ -43,7 +45,9 @@ export function CustomerAccess({ className }: { className?: string }) {
           password: form.password,
           address: form.address,
         });
-        setMessage("Compte créé. Si Supabase demande une confirmation e-mail, ouvrez le lien reçu avant connexion.");
+        setPendingFirstName(result.firstName);
+        setForm(initialForm);
+        setOpen(false);
       }
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Une erreur est survenue.");
@@ -63,14 +67,20 @@ export function CustomerAccess({ className }: { className?: string }) {
           <UserRound className="h-4 w-4 text-crimson" />
           Bonjour {firstName} !
         </div>
-        <button
-          type="button"
-          onClick={signOut}
-          className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground transition hover:text-cream"
-        >
-          <LogOut className="h-3.5 w-3.5" />
-          Se déconnecter
-        </button>
+        {customer ? (
+          <button
+            type="button"
+            onClick={signOut}
+            className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground transition hover:text-cream"
+          >
+            <LogOut className="h-3.5 w-3.5" />
+            Se déconnecter
+          </button>
+        ) : (
+          <span className="max-w-56 text-xs leading-relaxed text-muted-foreground">
+            Compte créé, confirmez l'e-mail reçu pour activer la connexion.
+          </span>
+        )}
       </div>
     );
   }

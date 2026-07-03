@@ -414,7 +414,7 @@ function AdminPage() {
   useEffect(() => {
     listBackOfficeCustomers({ data: undefined })
       .then((rows) => {
-        if (rows.length > 0) setClients(rows);
+        setClients(rows);
       })
       .catch(() => {
         setClients(clientsSeed);

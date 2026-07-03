@@ -8,7 +8,6 @@ export function Hero() {
   return (
     <section id="top" className="relative overflow-hidden border-b border-cream/10">
       <div className="hero-glow pointer-events-none absolute inset-0" />
-      <CustomerAccess className="absolute right-4 top-24 z-20 hidden lg:flex lg:right-8 lg:top-36" />
       <div className="relative mx-auto grid max-w-[1500px] gap-10 px-4 py-16 md:py-24 lg:grid-cols-2 lg:gap-12 lg:px-8 lg:py-28">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -42,6 +41,7 @@ export function Hero() {
           transition={{ duration: 0.9, ease: "easeOut" }}
           className="relative"
         >
+          <CustomerAccess className="mb-5 hidden justify-end lg:flex" />
           <div className="relative aspect-square w-full overflow-hidden rounded-3xl border border-cream/10 bg-ink-elevated">
             <img
               src={hero}
