@@ -6,7 +6,8 @@ import { CategoryNav } from "@/components/edo/CategoryNav";
 import { ProductCard } from "@/components/edo/ProductCard";
 import { DesktopCart, MobileCart } from "@/components/edo/Cart";
 import { Navbar } from "@/components/edo/Navbar";
-import { AlertTriangle, Sparkles } from "lucide-react";
+import { AutoMixInfo } from "@/components/edo/AutoMixInfo";
+import { AlertTriangle } from "lucide-react";
 import {
   adminStoreEvent,
   buildClientCategories,
@@ -96,14 +97,11 @@ function Index() {
             <CategoryNav onOpenCart={() => setCartOpen(true)} categories={menuCategories} />
 
             <div className="mx-auto max-w-[1100px] px-4 py-12 lg:px-8">
-              <button
-                type="button"
-                onClick={openAutoOrder}
-                className="jeudi-box mb-10 flex w-full items-center justify-center gap-2 rounded-full bg-crimson px-5 py-4 font-subtitle text-sm uppercase tracking-wider text-crimson-foreground crimson-glow lg:hidden"
-              >
-                <Sparkles className="h-4 w-4 shrink-0" />
-                <span className="whitespace-nowrap">Auto-mix</span>
-              </button>
+              <AutoMixInfo
+                onStart={openAutoOrder}
+                wrapperClassName="mb-10 lg:hidden"
+                buttonClassName="py-4 text-sm"
+              />
 
               {menuCategories.map((cat) => {
                 const isThursday = new Date().getDay() === 4;

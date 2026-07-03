@@ -5,6 +5,7 @@ import { useCart, formatPrice } from "@/lib/cart-context";
 import { ADDONS, CATEGORIES } from "@/data/menu";
 import { Checkout } from "./Checkout";
 import { AutoOrder } from "./AutoOrder";
+import { AutoMixInfo } from "./AutoMixInfo";
 import { generateAutoOrder, type AutoOrderInput, type AutoOrderResult } from "@/lib/auto-order";
 import { cn } from "@/lib/utils";
 
@@ -127,14 +128,7 @@ function CartBody({
             <p className="text-sm text-muted-foreground">
               Composez votre commande, elle apparaîtra ici.
             </p>
-            <motion.button
-              type="button"
-              whileTap={{ scale: 0.98 }}
-              onClick={onAutoOrder}
-              className="jeudi-box mt-3 rounded-full bg-crimson px-5 py-3 font-subtitle text-xs uppercase tracking-wider text-crimson-foreground crimson-glow"
-            >
-              Auto-mix
-            </motion.button>
+            <AutoMixInfo onStart={onAutoOrder} wrapperClassName="mt-3 max-w-xs" />
           </div>
         ) : (
           <div className="space-y-3">
