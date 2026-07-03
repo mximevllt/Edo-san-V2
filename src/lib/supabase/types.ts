@@ -12,6 +12,7 @@ export type CustomerAccount = {
 
 export type BackOfficeCustomer = {
   id: string;
+  authUserId: string | null;
   name: string;
   firstName: string;
   lastName: string;

@@ -31,6 +31,10 @@ const orderSchema = z.object({
   total: z.number().nonnegative(),
 });
 
+const deleteCustomerSchema = z.object({
+  customerId: z.string().uuid(),
+});
+
 function getSupabaseAdmin() {
   const url = process.env.SUPABASE_URL ?? process.env.VITE_SUPABASE_URL;
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -64,6 +68,7 @@ function mapBackOfficeCustomer(row: Record<string, unknown>): BackOfficeCustomer
 
   return {
     id: String(row.id),
+    authUserId: row.auth_user_id ? String(row.auth_user_id) : null,
     name: `${firstName} ${lastName}`.trim() || String(row.email ?? "Client"),
     firstName,
     lastName,
@@ -85,6 +90,7 @@ function mapCustomerTableRow(row: Record<string, unknown>): BackOfficeCustomer {
 
   return {
     id: String(row.id),
+    authUserId: row.auth_user_id ? String(row.auth_user_id) : null,
     name: `${firstName} ${lastName}`.trim() || String(row.email ?? "Client"),
     firstName,
     lastName,
@@ -128,14 +134,14 @@ export const listBackOfficeCustomers = createServerFn({ method: "POST" }).handle
   const supabase = getSupabaseAdmin();
 
   const { data, error } = await supabase
-    .from("customer_backoffice")
-    .select("*")
+      .from("customer_backoffice")
+      .select("*")
     .order("last_order_at", { ascending: false, nullsFirst: false });
 
   if (error) {
     const { data: customers, error: customersError } = await supabase
       .from("customers")
-      .select("id, first_name, last_name, phone, email, default_address, created_at")
+      .select("id, auth_user_id, first_name, last_name, phone, email, default_address, created_at")
       .order("created_at", { ascending: false });
 
     if (customersError) throw new Error(customersError.message);
@@ -150,6 +156,52 @@ export const upsertCustomerProfile = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const supabase = getSupabaseAdmin();
     return upsertCustomer(supabase, data);
+  });
+
+export const deleteCustomerAccount = createServerFn({ method: "POST" })
+  .inputValidator(deleteCustomerSchema)
+  .handler(async ({ data }) => {
+    const supabase = getSupabaseAdmin();
+
+    const { data: customer, error: customerError } = await supabase
+      .from("customers")
+      .select("id, auth_user_id")
+      .eq("id", data.customerId)
+      .maybeSingle();
+
+    if (customerError) throw new Error(customerError.message);
+    if (!customer) return { deleted: true };
+
+    if (customer.auth_user_id) {
+      const { error: deleteAuthError } = await supabase.auth.admin.deleteUser(customer.auth_user_id as string);
+      if (deleteAuthError && !deleteAuthError.message.toLowerCase().includes("not found")) {
+        throw new Error(deleteAuthError.message);
+      }
+    }
+
+    const { data: orders, error: ordersError } = await supabase
+      .from("orders")
+      .select("id")
+      .eq("customer_id", data.customerId);
+
+    if (ordersError) throw new Error(ordersError.message);
+
+    const orderIds = (orders ?? []).map((order) => order.id as string);
+    if (orderIds.length > 0) {
+      const { error: orderItemsError } = await supabase.from("order_items").delete().in("order_id", orderIds);
+      if (orderItemsError) throw new Error(orderItemsError.message);
+
+      const { error: deleteOrdersError } = await supabase.from("orders").delete().in("id", orderIds);
+      if (deleteOrdersError) throw new Error(deleteOrdersError.message);
+    }
+
+    const { error: addressesError } = await supabase.from("customer_addresses").delete().eq("customer_id", data.customerId);
+    if (addressesError) throw new Error(addressesError.message);
+
+    const { error: deleteCustomerError } = await supabase.from("customers").delete().eq("id", data.customerId);
+    if (deleteCustomerError) throw new Error(deleteCustomerError.message);
+
+    return { deleted: true };
   });
 
 export const recordCustomerOrder = createServerFn({ method: "POST" })

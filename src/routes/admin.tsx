@@ -71,7 +71,7 @@ import {
   type StoreProduct,
   type StorePromotion,
 } from "@/lib/admin-store";
-import { listBackOfficeCustomers } from "@/lib/api/customers.functions";
+import { deleteCustomerAccount, listBackOfficeCustomers } from "@/lib/api/customers.functions";
 import type { BackOfficeCustomer } from "@/lib/supabase/types";
 
 export const Route = createFileRoute("/admin")({
@@ -267,6 +267,7 @@ const ordersSeed: AdminOrder[] = [
 const clientsSeed: Client[] = [
   {
     id: "seed-justine",
+    authUserId: null,
     name: "Justine Martin",
     firstName: "Justine",
     lastName: "Martin",
@@ -282,6 +283,7 @@ const clientsSeed: Client[] = [
   },
   {
     id: "seed-hugo",
+    authUserId: null,
     name: "Hugo Perrin",
     firstName: "Hugo",
     lastName: "Perrin",
@@ -297,6 +299,7 @@ const clientsSeed: Client[] = [
   },
   {
     id: "seed-nadia",
+    authUserId: null,
     name: "Nadia Rossi",
     firstName: "Nadia",
     lastName: "Rossi",
@@ -312,6 +315,7 @@ const clientsSeed: Client[] = [
   },
   {
     id: "seed-marc",
+    authUserId: null,
     name: "Marc Vallon",
     firstName: "Marc",
     lastName: "Vallon",
@@ -365,6 +369,7 @@ function AdminPage() {
   const [clients, setClients] = useState<Client[]>([]);
   const [clientsLoading, setClientsLoading] = useState(true);
   const [clientsError, setClientsError] = useState<string | null>(null);
+  const [deletingClientId, setDeletingClientId] = useState<string | null>(null);
   const [orderView, setOrderView] = useState<"table" | "kanban">("table");
   const [orderTab, setOrderTab] = useState<(typeof orderTabs)[number]>("En cours");
   const [deliveryTab, setDeliveryTab] = useState(deliveryTabs[0]);
@@ -438,6 +443,26 @@ function AdminPage() {
     setBaseline(published);
     resetDraft(published);
     setToast("Modifications confirmées et publiées sur le site client.");
+  };
+
+  const deleteClient = async (client: Client) => {
+    const confirmed = window.confirm(
+      `Supprimer le compte client de ${client.name} ? Cette action supprimera aussi son accès de connexion Supabase et son historique de commandes.`,
+    );
+    if (!confirmed) return;
+
+    setDeletingClientId(client.id);
+    setClientsError(null);
+    try {
+      await deleteCustomerAccount({ data: { customerId: client.id } });
+      setClients((prev) => prev.filter((item) => item.id !== client.id));
+      setSelectedClient((current) => (current?.id === client.id ? null : current));
+      setToast(`Compte client ${client.name} supprimé.`);
+    } catch (error) {
+      setClientsError(error instanceof Error ? error.message : "Impossible de supprimer ce compte client.");
+    } finally {
+      setDeletingClientId(null);
+    }
   };
 
   const cancelDraft = () => {
@@ -593,7 +618,9 @@ function AdminPage() {
               clients={clients}
               loading={clientsLoading}
               error={clientsError}
+              deletingClientId={deletingClientId}
               onOpenClient={setSelectedClient}
+              onDeleteClient={deleteClient}
             />
           )}
           {activeSection === "stats" && <StatsPage />}
@@ -1584,12 +1611,16 @@ function ClientsPage({
   clients,
   loading,
   error,
+  deletingClientId,
   onOpenClient,
+  onDeleteClient,
 }: {
   clients: Client[];
   loading: boolean;
   error: string | null;
+  deletingClientId: string | null;
   onOpenClient: (client: Client) => void;
+  onDeleteClient: (client: Client) => void;
 }) {
   return (
     <div className="space-y-5">
@@ -1612,12 +1643,14 @@ function ClientsPage({
               <Th>Dernière commande</Th>
               <Th>Adresse</Th>
               <Th>Statut</Th>
+              <Th>Actions</Th>
             </tr>
           </thead>
           <tbody>
             {loading && (
               <tr className="border-t border-cream/10">
                 <Td>Chargement des clients Supabase...</Td>
+                <Td> </Td>
                 <Td> </Td>
                 <Td> </Td>
                 <Td> </Td>
@@ -1643,11 +1676,21 @@ function ClientsPage({
                 <Td>
                   <StatusBadge tone={client.status === "VIP" ? "success" : "neutral"}>{client.status}</StatusBadge>
                 </Td>
+                <Td>
+                  <IconButton
+                    label={deletingClientId === client.id ? "Suppression en cours" : "Supprimer le compte client"}
+                    icon={Trash2}
+                    danger
+                    disabled={Boolean(deletingClientId)}
+                    onClick={() => onDeleteClient(client)}
+                  />
+                </Td>
               </tr>
             ))}
             {!loading && !error && clients.length === 0 && (
               <tr className="border-t border-cream/10">
                 <Td>Aucun client enregistré pour le moment.</Td>
+                <Td> </Td>
                 <Td> </Td>
                 <Td> </Td>
                 <Td> </Td>
@@ -2356,13 +2399,30 @@ function Td({ children }: { children: ReactNode }) {
   return <td className="whitespace-nowrap px-3 py-3 align-middle text-sm text-muted-foreground">{children}</td>;
 }
 
-function IconButton({ label, icon: Icon, danger, onClick }: { label: string; icon: LucideIcon; danger?: boolean; onClick?: () => void }) {
+function IconButton({
+  label,
+  icon: Icon,
+  danger,
+  disabled,
+  onClick,
+}: {
+  label: string;
+  icon: LucideIcon;
+  danger?: boolean;
+  disabled?: boolean;
+  onClick?: () => void;
+}) {
   return (
     <button
       type="button"
       aria-label={label}
+      disabled={disabled}
       onClick={onClick}
-      className={cn("grid h-8 w-8 place-items-center rounded-full border border-cream/15 transition hover:border-crimson", danger ? "text-crimson" : "text-cream")}
+      className={cn(
+        "grid h-8 w-8 place-items-center rounded-full border border-cream/15 transition hover:border-crimson",
+        danger ? "text-crimson" : "text-cream",
+        disabled && "cursor-not-allowed opacity-45 hover:border-cream/15",
+      )}
     >
       <Icon className="h-4 w-4" />
     </button>
