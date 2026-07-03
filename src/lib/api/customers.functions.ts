@@ -79,6 +79,27 @@ function mapBackOfficeCustomer(row: Record<string, unknown>): BackOfficeCustomer
   };
 }
 
+function mapCustomerTableRow(row: Record<string, unknown>): BackOfficeCustomer {
+  const firstName = String(row.first_name ?? "");
+  const lastName = String(row.last_name ?? "");
+
+  return {
+    id: String(row.id),
+    name: `${firstName} ${lastName}`.trim() || String(row.email ?? "Client"),
+    firstName,
+    lastName,
+    phone: String(row.phone ?? ""),
+    email: String(row.email ?? ""),
+    orders: 0,
+    spent: 0,
+    average: 0,
+    lastOrder: "Aucune",
+    address: String(row.default_address ?? ""),
+    status: "Nouveau",
+    topProducts: [],
+  };
+}
+
 async function upsertCustomer(
   supabase: ReturnType<typeof getSupabaseAdmin>,
   data: z.infer<typeof profileSchema>,
@@ -111,7 +132,16 @@ export const listBackOfficeCustomers = createServerFn({ method: "POST" }).handle
     .select("*")
     .order("last_order_at", { ascending: false, nullsFirst: false });
 
-  if (error) throw new Error(error.message);
+  if (error) {
+    const { data: customers, error: customersError } = await supabase
+      .from("customers")
+      .select("id, first_name, last_name, phone, email, default_address, created_at")
+      .order("created_at", { ascending: false });
+
+    if (customersError) throw new Error(customersError.message);
+    return (customers ?? []).map((row) => mapCustomerTableRow(row));
+  }
+
   return (data ?? []).map((row) => mapBackOfficeCustomer(row));
 });
 

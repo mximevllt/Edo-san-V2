@@ -362,7 +362,9 @@ function AdminPage() {
   const [selectedOrder, setSelectedOrder] = useState<AdminOrder | null>(null);
   const [editingProduct, setEditingProduct] = useState<AdminProduct | null>(null);
   const [selectedClient, setSelectedClient] = useState<Client | null>(null);
-  const [clients, setClients] = useState<Client[]>(clientsSeed);
+  const [clients, setClients] = useState<Client[]>([]);
+  const [clientsLoading, setClientsLoading] = useState(true);
+  const [clientsError, setClientsError] = useState<string | null>(null);
   const [orderView, setOrderView] = useState<"table" | "kanban">("table");
   const [orderTab, setOrderTab] = useState<(typeof orderTabs)[number]>("En cours");
   const [deliveryTab, setDeliveryTab] = useState(deliveryTabs[0]);
@@ -412,12 +414,22 @@ function AdminPage() {
   }, []);
 
   useEffect(() => {
+    setClientsLoading(true);
+    setClientsError(null);
     listBackOfficeCustomers({ data: undefined })
       .then((rows) => {
         setClients(rows);
       })
-      .catch(() => {
-        setClients(clientsSeed);
+      .catch((error) => {
+        setClients([]);
+        setClientsError(
+          error instanceof Error
+            ? error.message
+            : "Impossible de charger les clients Supabase.",
+        );
+      })
+      .finally(() => {
+        setClientsLoading(false);
       });
   }, []);
 
@@ -576,7 +588,14 @@ function AdminPage() {
               onToast={setToast}
             />
           )}
-          {activeSection === "clients" && <ClientsPage clients={clients} onOpenClient={setSelectedClient} />}
+          {activeSection === "clients" && (
+            <ClientsPage
+              clients={clients}
+              loading={clientsLoading}
+              error={clientsError}
+              onOpenClient={setSelectedClient}
+            />
+          )}
           {activeSection === "stats" && <StatsPage />}
           {activeSection === "hours" && (
             <HoursPage closure={closure} onChangeClosure={setClosureAndStore} hours={hours} onChangeHours={setHours} />
@@ -1561,10 +1580,25 @@ function PromotionsPage({
   );
 }
 
-function ClientsPage({ clients, onOpenClient }: { clients: Client[]; onOpenClient: (client: Client) => void }) {
+function ClientsPage({
+  clients,
+  loading,
+  error,
+  onOpenClient,
+}: {
+  clients: Client[];
+  loading: boolean;
+  error: string | null;
+  onOpenClient: (client: Client) => void;
+}) {
   return (
     <div className="space-y-5">
       <Toolbar title="Clients" description="Historique, adresses, notes internes, statut et valeur client." />
+      {error && (
+        <div className="rounded-2xl border border-[#f4a23d]/35 bg-[#f4a23d]/10 px-4 py-3 text-sm leading-relaxed text-[#f4a23d]/80">
+          La base clients Supabase ne répond pas encore : {error}
+        </div>
+      )}
       <Panel>
         <ResponsiveTable>
           <thead>
@@ -1581,6 +1615,19 @@ function ClientsPage({ clients, onOpenClient }: { clients: Client[]; onOpenClien
             </tr>
           </thead>
           <tbody>
+            {loading && (
+              <tr className="border-t border-cream/10">
+                <Td>Chargement des clients Supabase...</Td>
+                <Td> </Td>
+                <Td> </Td>
+                <Td> </Td>
+                <Td> </Td>
+                <Td> </Td>
+                <Td> </Td>
+                <Td> </Td>
+                <Td> </Td>
+              </tr>
+            )}
             {clients.map((client) => (
               <tr key={client.id} className="border-t border-cream/10">
                 <Td>
@@ -1598,7 +1645,7 @@ function ClientsPage({ clients, onOpenClient }: { clients: Client[]; onOpenClien
                 </Td>
               </tr>
             ))}
-            {clients.length === 0 && (
+            {!loading && !error && clients.length === 0 && (
               <tr className="border-t border-cream/10">
                 <Td>Aucun client enregistré pour le moment.</Td>
                 <Td> </Td>
